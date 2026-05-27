@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESB Training Hub | 2CYBN</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --surface2: #1a1f26;
+    --border: #2a3040;
+    --accent: #c8a84b;
+    --accent2: #4b8fc8;
+    --danger: #c84b4b;
+    --go: #4bc86e;
+    --nogo: #c84b4b;
+    --text: #e8eaf0;
+    --text-muted: #7a8494;
+    --text-dim: #4a5464;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 2px solid var(--accent);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.75rem;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--accent);
+    background: rgba(200,168,75,0.1);
+  }
+
+  /* PAGES */
+  .page { display: none; min-height: calc(100vh - 60px); }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0a0c0f 0%, #111c2e 50%, #0a0c0f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(200,168,75,0.015) 40px,
+      rgba(200,168,75,0.015) 41px
+    );
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(200,168,75,0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    padding: 0.3rem 1rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* PHASE CARDS ON HOME */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    padding: 1.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phase-card:hover {
+    border-color: var(--accent);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+
+  .phase-card .phase-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+
+  .phase-card h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .phase-card .go-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.6rem;
+    background: rgba(75,200,110,0.1);
+    border: 1px solid var(--go);
+    color: var(--go);
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    border-left: 4px solid var(--accent);
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-header .label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* INFO BOXES */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .info-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+  }
+
+  .info-box .label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .info-box .value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .info-box .sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  /* STANDARD BLOCK */
+  .standard-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--go);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .standard-block.warning {
+    border-left-color: var(--accent);
+  }
+
+  .standard-block.danger {
+    border-left-color: var(--danger);
+  }
+
+  .standard-block h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--go);
+    margin-bottom: 0.5rem;
+  }
+
+  .standard-block.warning h4 { color: var(--accent); }
+  .standard-block.danger h4 { color: var(--danger); }
+
+  .standard-block p, .standard-block li {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .standard-block ul { padding-left: 1.25rem; }
+  .standard-block li { margin-bottom: 0.2rem; }
+
+  /* ACCORDION (weapons/lanes) */
+  .accordion { margin-bottom: 0.5rem; }
+
+  .accordion-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .accordion-header:hover {
+    background: var(--surface2);
+    border-color: var(--accent);
+  }
+
+  .accordion-header.open {
+    border-color: var(--accent);
+    border-bottom-color: transparent;
+    background: var(--surface2);
+  }
+
+  .accordion-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .accordion-title .tag {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    padding: 0.2rem 0.5rem;
+    background: rgba(200,168,75,0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .accordion-title .tag.medical {
+    background: rgba(75,143,200,0.1);
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  .accordion-title .tag.patrol {
+    background: rgba(75,200,110,0.1);
+    border-color: var(--go);
+    color: var(--go);
+  }
+
+  .accordion-title h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  .accordion-arrow {
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+  }
+
+  .accordion-header.open .accordion-arrow { transform: rotate(180deg); color: var(--accent); }
+
+  .accordion-body {
+    display: none;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    border-top: none;
+    padding: 1.5rem;
+  }
+
+  .accordion-body.open { display: block; }
+
+  /* TASK DETAIL */
+  .task-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .task-meta-item { }
+
+  .task-meta-item .label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .task-meta-item .val {
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .steps-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+  }
+
+  .steps-list li {
+    counter-increment: step;
+    display: flex;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .steps-list li:last-child { border-bottom: none; }
+
+  .steps-list li::before {
+    content: counter(step);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: rgba(200,168,75,0.1);
+    border: 1px solid rgba(200,168,75,0.3);
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .go-nogo-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .go-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .go-pill.go {
+    background: rgba(75,200,110,0.1);
+    border: 1px solid var(--go);
+    color: var(--go);
+  }
+
+  .go-pill.nogo {
+    background: rgba(200,75,75,0.1);
+    border: 1px solid var(--nogo);
+    color: var(--nogo);
+  }
+
+  /* YOUTUBE EMBED */
+  .video-section {
+    margin-top: 1.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 1rem;
+  }
+
+  .video-section .video-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .video-placeholder {
+    background: #000;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border: 1px dashed var(--border);
+  }
+
+  .video-placeholder .icon { font-size: 2rem; }
+
+  iframe.yt {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+  }
+
+  /* PT PLAN */
+  .week-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .week-header h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .week-header .focus-tag {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .day-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 700px) {
+    .day-grid { grid-template-columns: 1fr 1fr; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 0; }
+    .nav-links a { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
+    .container { padding: 1rem; }
+  }
+
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem;
+  }
+
+  .day-card .day-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .day-card .modality {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+  }
+
+  .day-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .day-card li {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 0.15rem 0;
+    line-height: 1.4;
+  }
+
+  .day-card li::before {
+    content: '▸ ';
+    color: var(--accent);
+    font-size: 0.65rem;
+  }
+
+  /* SCHEDULE CALENDAR */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 2rem;
+  }
+
+  .cal-header {
+    background: var(--surface2);
+    padding: 0.5rem;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+
+  .cal-day {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.5rem;
+    min-height: 70px;
+    font-size: 0.75rem;
+  }
+
+  .cal-day .date {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-bottom: 0.3rem;
+  }
+
+  .cal-day .event {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+    padding: 0.15rem 0.3rem;
+    border-radius: 2px;
+    margin-bottom: 0.2rem;
+  }
+
+  .cal-day .event.pt { background: rgba(200,168,75,0.15); color: var(--accent); }
+  .cal-day .event.study { background: rgba(75,143,200,0.15); color: var(--accent2); }
+  .cal-day .event.ruck { background: rgba(200,75,75,0.15); color: var(--danger); }
+  .cal-day .event.test { background: rgba(75,200,110,0.15); color: var(--go); }
+  .cal-day .event.rest { background: rgba(100,100,100,0.15); color: var(--text-dim); }
+  .cal-day.empty { background: transparent; border-color: transparent; }
+
+  /* ELIGIBILITY TABLE */
+  .req-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .req-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .req-row:last-child { border-bottom: none; }
+
+  .req-row .req-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .req-row .req-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .req-row .req-text strong {
+    color: var(--text);
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.1rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  /* PAGE TITLE */
+  .page-title {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem;
+  }
+
+  .page-title .breadcrumb {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .page-title p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+
+  /* EPFA EVENTS */
+  .epfa-event {
+    display: flex;
+    gap: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .epfa-event .num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 2rem;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .epfa-event .content h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .epfa-event .content p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .sub-accordion {
+    margin: 1rem 0 0;
+  }
+
+  .sub-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .sub-accordion-header:hover { border-color: var(--accent2); }
+
+  .sub-accordion-header span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .sub-accordion-body {
+    display: none;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .sub-accordion-body.open { display: block; }
+
+  .uniform-list {
+    columns: 2;
+    column-gap: 2rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .uniform-list li {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    padding: 0.2rem 0;
+    break-inside: avoid;
+  }
+
+  .uniform-list li::before { content: '▸ '; color: var(--accent); font-size: 0.7rem; }
+
+  @media (max-width: 600px) {
+    .uniform-list { columns: 1; }
+    .day-grid { grid-template-columns: 1fr; }
+    .cal-grid { grid-template-columns: repeat(7, 1fr); }
+    .cal-day { min-height: 50px; padding: 0.3rem; }
+    .cal-day .event { font-size: 0.6rem; }
+    .epfa-event { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">ESB Training Hub</div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a href="#" onclick="showPage('phase1')" id="nav-phase1">Phase 1</a></li>
+    <li><a href="#" onclick="showPage('phase2')" id="nav-phase2">Phase 2</a></li>
+    <li><a href="#" onclick="showPage('phase3')" id="nav-phase3">Phase 3</a></li>
+    <li><a href="#" onclick="showPage('phase4')" id="nav-phase4">Phase 4</a></li>
+    <li><a href="#" onclick="showPage('pt')" id="nav-pt">PT Plan</a></li>
+    <li><a href="#" onclick="showPage('calendar')" id="nav-calendar">Schedule</a></li>
+  </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">2CYBN · Fort Meade</div>
+    <h1>Expert <span>Soldier</span> Badge</h1>
+    <p>Training Hub for ESB/E2B Candidates. All phases, study material, grading criteria, and PT programming in one place.</p>
+  </div>
+
+  <div class="container">
+    <div class="section-header">
+      <div class="label">Navigate</div>
+      <h2>Training Phases</h2>
+    </div>
+
+    <div class="phase-grid">
+      <div class="phase-card" onclick="showPage('phase1')">
+        <div class="phase-num">PHASE 01 / 04</div>
+        <h3>Expert Physical Fitness Assessment</h3>
+        <p>1-mile run, dead-stop pushups, 100m sprint, sandbag lifts, farmers carry, movement drill, 1-mile run. Continuous event — no individual timing.</p>
+        <div class="go-tag">26:30 TIME LIMIT</div>
+      </div>
+      <div class="phase-card" onclick="showPage('phase2')">
+        <div class="phase-num">PHASE 02 / 04</div>
+        <h3>Day & Night Land Navigation</h3>
+        <p>Navigate using 1:50,000 map and lensatic compass without electronic devices. Must pass both day and night. Not retestable.</p>
+        <div class="go-tag">MUST PASS BOTH</div>
+      </div>
+      <div class="phase-card" onclick="showPage('phase3')">
+        <div class="phase-num">PHASE 03 / 04</div>
+        <h3>Weapons, Medical & Patrol Lanes</h3>
+        <p>Graded task lanes: weapons (M4/M320, M17, M249, M240, grenades), medical (TCCC, MEDEVAC, wounds), and patrol tasks.</p>
+        <div class="go-tag">15 MIN RETEST WINDOW</div>
+      </div>
+      <div class="phase-card" onclick="showPage('phase4')">
+        <div class="phase-num">PHASE 04 / 04</div>
+        <h3>12-Mile Ruck March</h3>
+        <p>12-mile foot march followed immediately by a Final Event. Must complete the ruck in under 3 hours. Not retestable.</p>
+        <div class="go-tag">3:00 TIME LIMIT</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-header">
+      <div class="label">Eligibility</div>
+      <h2>Candidate Requirements</h2>
+    </div>
+
+    <div class="req-list">
+      <div class="req-row">
+        <div class="req-icon">⚖️</div>
+        <div class="req-text"><strong>Height & Weight</strong>Must meet Army height and weight standards (AR 600-9) before submission.</div>
+      </div>
+      <div class="req-row">
+        <div class="req-icon">🏃</div>
+        <div class="req-text"><strong>Army Fitness Test (AFT)</strong>Score 90 in every AFT event. Test cannot be older than 30 days from packet submission.</div>
+      </div>
+      <div class="req-row">
+        <div class="req-icon">🎒</div>
+        <div class="req-text"><strong>12-Mile Ruck March</strong>Complete a 12-mile ruck march under 3 hours within 30 days of packet submission.</div>
+      </div>
+      <div class="req-row">
+        <div class="req-icon">🎯</div>
+        <div class="req-text"><strong>Weapons Qualification</strong>Must qualify as Expert on assigned weapon. Cannot be older than 6 months from submission.</div>
+      </div>
+      <div class="req-row">
+        <div class="req-icon">🗺️</div>
+        <div class="req-text"><strong>Land Navigation</strong>Must pass the local land navigation course (day and night).</div>
+      </div>
+      <div class="req-row">
+        <div class="req-icon">🚫</div>
+        <div class="req-text"><strong>Profile / Flag</strong>No temporary profile or flag. Soldiers must be fully available for all events.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-header">
+      <div class="label">Submission Packet</div>
+      <h2>Required Documents</h2>
+    </div>
+
+    <div class="req-list">
+      <div class="req-row"><div class="req-icon">📄</div><div class="req-text"><strong>Soldier Talent Profile</strong>Current talent profile from iPERMS/AIM.</div></div>
+      <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>DA Form 7081</strong>Rifle Marksmanship Scorecard — must show Expert qualification.</div></div>
+      <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>DA Form 705</strong>Army Fitness Test Scorecard — 90+ in all events, within 30 days.</div></div>
+      <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>Exception to Policy</strong>Required for non-combat MOS participation. Coordinate with chain of command.</div></div>
+    </div>
+
+    <p style="color:var(--text-muted); font-size:0.85rem; margin-top:1rem;">Coordinate packet submission with Old Guard / Regimental Operations (S3). POC: SGM Kitzmiller, MSG Brookshire, MSG Ryan.</p>
+  </div>
+</div>
+
+<!-- PHASE 1 -->
+<div id="page-phase1" class="page">
+  <div class="page-title">
+    <div class="breadcrumb">Phase 01 · ESB</div>
+    <h2>Expert Physical Fitness Assessment</h2>
+    <p>Continuous event in body armor. No individual event is timed — cumulative time determines pass/fail.</p>
+  </div>
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-box"><div class="label">Time Standard</div><div class="value">26:30</div><div class="sub">Minutes and seconds to complete all events</div></div>
+      <div class="info-box"><div class="label">Result if Failed</div><div class="value">ELIMINATED</div><div class="sub">No progression to Phase 2</div></div>
+      <div class="info-box"><div class="label">Uniform</div><div class="value">BODY ARMOR</div><div class="sub">Plates + helmet + OCP + boots</div></div>
+      <div class="info-box"><div class="label">Event Type</div><div class="value">CONTINUOUS</div><div class="sub">All tasks performed in sequence</div></div>
+    </div>
+
+    <div class="standard-block danger">
+      <h4>⚠ Critical Standard</h4>
+      <p>Candidates must complete ALL events within 26 minutes and 30 seconds. This is a cumulative time — no individual event is timed separately. Any candidate who fails to complete within the time limit is eliminated from EIB testing. No candidate who fails the EPFA will progress to Phase Two.</p>
+    </div>
+
+    <div class="standard-block warning">
+      <h4>Uniform Requirements</h4>
+      <ul>
+        <li>Ballistic body armor carrier with front and back plates (unit/CIF issued, min 20 lbs, nipple-to-navel coverage)</li>
+        <li>Army-issued ballistic helmet (ACH)</li>
+        <li>OCP top and bottoms, belt, coyote tan t-shirt</li>
+        <li>AR 670-1 approved boots</li>
+      </ul>
+    </div>
+
+    <div class="section-header" style="margin-top:2rem;">
+      <div class="label">Events in Order</div>
+      <h2>EPFA Event Sequence</h2>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">1</div>
+      <div class="content">
+        <h4>1-Mile Run (First)</h4>
+        <p>Candidates line up and on command, begin running. Must complete the designated 1-mile distance before moving to the next event. Walking is authorized but strongly discouraged. No physical assistance allowed — candidate will be terminated if helped or if they leave the course dishonestly.</p>
+      </div>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">2</div>
+      <div class="content">
+        <h4>30 Dead-Stop Pushups</h4>
+        <p>From a straight-body pushup position, candidates lower their chest to the ground and lift BOTH hands off the surface (dead-stop). Push back up with arms generally straight. Knees must not contact the ground during execution. All 30 repetitions must be completed before moving on. Candidates may rest in any position but must complete all reps.</p>
+      </div>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">3</div>
+      <div class="content">
+        <h4>100-Meter Sprint</h4>
+        <p>Sprint 100 meters to the sandbag platform area. This transitions directly into the sandbag lift event.</p>
+      </div>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">4</div>
+      <div class="content">
+        <h4>16x Sandbag Lifts</h4>
+        <p>Lift 16 sandbags onto a 65-inch platform. Each sandbag must be lifted and placed onto the platform to count. Candidates must complete all 16 repetitions.</p>
+      </div>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">5</div>
+      <div class="content">
+        <h4>50-Meter Farmers Carry</h4>
+        <p>Carry two 5-gallon Army Water cans (approximately 40 lbs each) for 50 meters. Both cans must be carried simultaneously for the full distance.</p>
+      </div>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">6</div>
+      <div class="content">
+        <h4>50-Meter Movement Drill</h4>
+        <p>High crawl for 25 meters, then a 25-meter 3-5 second rush. This simulates combat movement under fire.</p>
+      </div>
+    </div>
+
+    <div class="epfa-event">
+      <div class="num">7</div>
+      <div class="content">
+        <h4>1-Mile Run (Second)</h4>
+        <p>Same standards as the first 1-mile run. Candidates must complete the full mile to finish the EPFA. Total cumulative time for all events must be 26:30 or less.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2 -->
+<div id="page-phase2" class="page">
+  <div class="page-title">
+    <div class="breadcrumb">Phase 02 · ESB</div>
+    <h2>Day & Night Land Navigation</h2>
+    <p>Individual proficiency navigating dismounted using map and compass — no electronic devices.</p>
+  </div>
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-box"><div class="label">Map Scale</div><div class="value">1:50,000</div><div class="sub">Military topographic map</div></div>
+      <div class="info-box"><div class="label">Points to Find</div><div class="value">4 Points</div><div class="sub">10-digit grids provided</div></div>
+      <div class="info-box"><div class="label">Must Pass</div><div class="value">BOTH</div><div class="sub">Day AND night — not retestable</div></div>
+      <div class="info-box"><div class="label">Failure Result</div><div class="value">ELIMINATED</div><div class="sub">Immediate removal from EIB testing</div></div>
+    </div>
+
+    <div class="standard-block danger">
+      <h4>⚠ Not Retestable</h4>
+      <p>Failing land navigation eliminates the Candidate from the EIB test entirely. This event is NOT retestable. Candidates must pass both the day AND night courses.</p>
+    </div>
+
+    <div class="section-header" style="margin-top:2rem;">
+      <div class="label">Equipment</div>
+      <h2>What Candidates Need</h2>
+    </div>
+
+    <div class="standard-block">
+      <h4>Required Equipment</h4>
+      <ul>
+        <li>1:50,000 military topographic map (provided)</li>
+        <li>Lensatic compass (must be calibrated at designated calibration site)</li>
+        <li>Protractor</li>
+        <li>Writing instrument</li>
+        <li>Score sheet with four 10-digit grids, 10-digit grid to release point, and 10-digit grid to end point</li>
+      </ul>
+    </div>
+
+    <div class="standard-block warning">
+      <h4>Prohibited Equipment</h4>
+      <ul>
+        <li>Electronic navigation devices (GPS, phone maps, etc.) — STRICTLY PROHIBITED</li>
+        <li>Pre-plotted maps from training</li>
+        <li>Any cheat sheets or notes not provided by the grader</li>
+      </ul>
+    </div>
+
+    <div class="section-header" style="margin-top:2rem;">
+      <div class="label">Standards</div>
+      <h2>Grading Criteria</h2>
+    </div>
+
+    <div class="standard-block">
+      <h4>GO Criteria</h4>
+      <ul>
+        <li>Successfully locate and identify the required number of points within the time limit</li>
+        <li>Navigate from one point to the next without electronic assistance</li>
+        <li>Pass BOTH the day and night course</li>
+      </ul>
+    </div>
+
+    <div class="standard-block danger">
+      <h4>NO-GO Criteria</h4>
+      <ul>
+        <li>Failure to find the required number of points within the time limit</li>
+        <li>Use of any electronic navigation device</li>
+        <li>Failing either the day or night course</li>
+        <li>Receiving assistance from another candidate or unauthorized individual</li>
+      </ul>
+    </div>
+
+    <div class="section-header" style="margin-top:2rem;">
+      <div class="label">Study Tips</div>
+      <h2>Land Nav Key Skills</h2>
+    </div>
+
+    <div class="standard-block">
+      <h4>Skills to Master</h4>
+      <ul>
+        <li>Plotting 10-digit grid coordinates accurately on a 1:50,000 map</li>
+        <li>Orienting the map using a lensatic compass (declination adjustment)</li>
+        <li>Determining azimuth and back-azimuth</li>
+        <li>Pacing — know your pace count for 100 meters on various terrain</li>
+        <li>Terrain association — using terrain features to confirm location</li>
+        <li>Night navigation — using a red lens and adjusted techniques</li>
+        <li>Using the protractor correctly to measure distances</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3 -->
+<div id="page-phase3" class="page">
+  <div class="page-title">
+    <div class="breadcrumb">Phase 03 · ESB</div>
+    <h2>Weapons, Medical & Patrol Lanes</h2>
+    <p>Individual task lanes graded GO/NO-GO. Candidates have 15 min – 1 hour retest window on a NO-GO. Two NO-GOs at the same lane = eliminated.</p>
+  </div>
+  <div class="container">
+
+    <div class="info-grid">
+      <div class="info-box"><div class="label">Retest Window</div><div class="value">15–60 MIN</div><div class="sub">Cannot leave retest area</div></div>
+      <div class="info-box"><div class="label">Two NO-GOs</div><div class="value">ELIMINATED</div><div class="sub">At same lane — out-processed</div></div>
+      <div class="info-box"><div class="label">Standards Source</div><div class="value">CAR / ITASK</div><div class="sub">rdl.train.army.mil</div></div>
+      <div class="info-box"><div class="label">Out of Sequence</div><div class="value">NO-GO</div><div class="sub">Immediate stop on task</div></div>
+    </div>
+
+    <div class="standard-block warning">
+      <h4>NO-GO Rule</h4>
+      <p>If a Candidate performs a task out of sequence or fails to meet the time standard on any portion of a task, they are stopped immediately and given a NO-GO. They have no less than 15 minutes and up to one hour to retest. If a Candidate receives two NO-GOs at the same lane, the Lane NCOIC/OIC will out-process the candidate from EIB testing.</p>
+    </div>
+
+    <!-- WEAPONS -->
+    <div class="section-header" style="margin-top:2rem;">
+      <div class="label">Chapter 9</div>
+      <h2>Weapons Lane</h2>
+    </div>
+
+    <!-- W1: M4/M16 -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag">W1 · PART 1</span>
+          <h3>M4 Carbine / M16 Rifle — Immediate Action & CLFC</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, load, fire until stoppage, perform immediate action, expend remaining ammo, unload, and clear an M4/M16</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Correctly perform all steps, in sequence, in <strong>30 seconds or less</strong></div></div>
+          <div class="task-meta-item"><div class="label">Starting Position</div><div class="val">Weapon in low ready. Weapon free of ammo, bolt forward, on FIRE, trigger pulled.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>Clear the weapon:</strong> Point safe direction. Lock bolt to rear. Pull charging handle rearward, hold bolt catch. Allow bolt forward until it engages bolt catch. Release. Return charging handle forward. Ensure receiver/chamber free of ammo. Place on SAFE.</li>
+          <li><strong>Load the weapon:</strong> Insert magazine (push up until catch engages, tap upward to seat). Chamber a round: press upper portion of bolt catch to release bolt forward. Tap forward assist. Place on SEMI and engage target.</li>
+          <li><strong>Perform Immediate Action (on stoppage):</strong> Remove trigger finger. Forcefully tap magazine upward with heel of non-firing hand. Grasp charging handle, retract fully to rear, release. Reacquire target. Press trigger — if fires, continue; if not, clear.</li>
+          <li><strong>Clear (final):</strong> Point muzzle safe direction. Place on SAFE. Remove magazine. Lock bolt open via charging handle. Allow bolt forward until it engages bolt catch. Return charging handle forward. Place selector on SAFE. Ensure no ammo in receiver/chamber. Return bolt to closed position. Close ejection port cover.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All steps correct, in sequence, ≤30 sec</div>
+          <div class="go-pill nogo">✗ NO-GO: Out of sequence, exceeds time, ammo not cleared</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — M4 CLFC & Immediate Action</div>
+          <iframe class="yt" src="https://www.youtube.com/watch?v=CLhTtanJesc&list=PL5wm7g3r39qGC71htRmcpYrD14cRMPWBV"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- W1 Part 2: M320 -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag">W1 · PART 2</span>
+          <h3>M320 Grenade Launcher — Load, Fire & Unload</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Load, fire and unload an M320. Unload and clear an M320 that has not been fired.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Load/Fire)</div><div class="val">Correctly clear, load, and fire in <strong>20 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Unload)</div><div class="val">Correctly unload and clear in <strong>20 seconds</strong>. Must NOT drop 40mm ammo.</div></div>
+        </div>
+        <p style="margin-bottom:1rem; color:var(--text-muted); font-size:0.875rem;"><strong>Load and Fire:</strong></p>
+        <ol class="steps-list">
+          <li>Ensure weapon is in "S" (safe) position.</li>
+          <li>Press barrel release and pivot barrel out from receiver.</li>
+          <li>Insert cartridge into barrel. Ensure cartridge is seated fully forward in rear of barrel.</li>
+          <li>Pivot barrel into receiver until barrel locking lever engages barrel. <em>(Note: There should be an audible click.)</em></li>
+          <li>Move selector lever to "F" (fire position). Engage target.</li>
+          <li>Move selector lever back to "S" (safe) position.</li>
+        </ol>
+        <p style="margin:1rem 0 0.5rem; color:var(--text-muted); font-size:0.875rem;"><strong>Unload and Clear an Unfired Round:</strong></p>
+        <ol class="steps-list">
+          <li>Keep weapon pointed in safe direction, trigger finger outside trigger guard.</li>
+          <li>Press upward on barrel release lever and pivot barrel out from receiver.</li>
+          <li>Remove round or cartridge case by hand. Grasp rim. Pull rearward to remove.</li>
+          <li>Pivot barrel into receiver until barrel release lever engages barrel.</li>
+          <li>Ensure selector remains in "S" (safe) position.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Both parts correct, in sequence, within time</div>
+          <div class="go-pill nogo">✗ NO-GO: Drops 40mm ammo, out of sequence, exceeds time</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — M320 Grenade Launcher</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- W3: M249 -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag">W3</span>
+          <h3>M249 Machine Gun — Clear, Disassemble, Assemble & Functions Check</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, completely disassemble, assemble, and perform a functions check on an M249</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Disassemble)</div><div class="val">Correctly clear and completely disassemble, matching groups with correct nomenclature, within <strong>3 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Assemble)</div><div class="val">Correctly assemble and perform functions check within <strong>3 minutes</strong></div></div>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.875rem; margin-bottom:0.75rem;"><strong>Clear and Disassemble:</strong></p>
+        <ol class="steps-list">
+          <li>Point weapon safe direction. Ensure safety is on FIRE. With right-hand palm up, pull and hold charging handle to rear. Place on SAFE.</li>
+          <li>Return charging handle to locked position.</li>
+          <li>Look away from feed tray cover. Squeeze latches, open feed tray cover assembly upward.</li>
+          <li>Conduct five-point safety check: feed pawl assembly under cover; feed tray assembly; lift tray and inspect chamber; inspect magazine well; inspect space between bolt face and chamber; inspect under bolt and operating rod.</li>
+          <li>Lower and close feed tray cover (securely locks).</li>
+          <li>With right-hand palm up, pull and hold charging handle to rear. Place on FIRE. Press trigger with left hand, ease bolt forward with right hand to locked forward position. Release trigger.</li>
+          <li>Disassemble into groups on correct nomenclature labels: (a) Driving spring and return rod/transfer mechanism assembly, separated; (b) Bolt, slide, piston assemblies, separated; (c) Heat shield, gas regulator, barrel; (d) Handguard and receiver assembly; (e) Buttstock and buffer assembly; (f) Trigger mechanism assembly; (g) Gas cylinder; (h) Bipod.</li>
+        </ol>
+        <p style="color:var(--text-muted); font-size:0.875rem; margin:1rem 0 0.5rem;"><strong>Assemble and Functions Check:</strong></p>
+        <ol class="steps-list">
+          <li>Assemble the weapon (reverse of disassembly).</li>
+          <li>Functions check — Point safe direction. Safety on FIRE. Pull and hold charging handle to rear while still holding.</li>
+          <li>Squeeze trigger — weapon should NOT fire.</li>
+          <li>Place on FIRE. Press trigger with left hand, ease bolt forward until locked forward position. Release trigger.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct nomenclature, in sequence, within 3 min each part</div>
+          <div class="go-pill nogo">✗ NO-GO: Wrong nomenclature placement, exceeds time, fails functions check</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — M249 Disassembly / Assembly</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- W5: Hand Grenades -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag">W5 · PART 1</span>
+          <h3>Hand Grenades — Employ M67 Fragmentation Grenade</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Employ hand grenades against troops in the open (two M67 Fragmentation Grenades)</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Correctly perform all tasks, in sequence, within <strong>30 seconds</strong>. One of the two grenades must explode within 5 meters of the target.</div></div>
+          <div class="task-meta-item"><div class="label">Target</div><div class="val">Single enemy silhouette at 35 meters with 5-meter radius circle</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Select proper throwing position (5 options: standing, prone-to-standing, kneeling, prone-to-kneeling, alternate prone). Ensure covered position, determine distance, align body with target.</li>
+          <li>Grip the hand grenade: palm of throwing hand, safety lever between 1st and 2nd joints of thumb. Keep pull ring away from palm.</li>
+          <li>Prepare: Tilt grenade forward to observe safety clip. Remove safety clip by sweeping away with opposite thumb. Insert index/middle finger of non-throwing hand in pull ring to the knuckle. Hold safety lever down firmly. Twist pull ring toward body to release pull ring from confidence clip. Remove safety pin.</li>
+          <li>Throw grenade overhand so it arcs, landing on or near target. Allow throwing arm to follow through naturally. Seek cover immediately.</li>
+          <li>Prepare second grenade regardless of whether first exploded within 5 meters.</li>
+          <li>Reengage if first grenade did not meet requirements.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct sequence, ≤30 sec, at least 1 of 2 grenades within 5m</div>
+          <div class="go-pill nogo">✗ NO-GO: Out of sequence, exceeds time, neither grenade within 5m</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — Hand Grenade Employment</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- W2: M17/M18 Pistol -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W2 · PART 1</span><h3>M17/M18 Pistol — Clear, Disassemble, Assemble & Functions Check</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, Disassemble, Assemble, and Perform a Functions Check on an M17/M18 Pistol</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Disassemble)</div><div class="val">Correctly clear and disassemble within <strong>30 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Assemble)</div><div class="val">Correctly assemble and perform functions check within <strong>45 seconds</strong></div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Clear and Disassemble:</strong></p>
+        <ol class="steps-list">
+          <li>Point pistol in a safe direction. Place safety lever to safe (Up) position.</li>
+          <li>Depress magazine release and remove magazine.</li>
+          <li>Grasp slide serrations, fully retract slide, lock to rear using slide stop.</li>
+          <li>Visually inspect chamber, magazine well, and bolt face. Release slide forward.</li>
+          <li>Disassemble onto nomenclature labels: (a) Magazine; (b) Receiver; (c) Barrel; (d) Slide assembly; (e) Recoil spring guide assembly.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Assemble and Functions Check:</strong></p>
+        <ol class="steps-list">
+          <li>Assemble weapon. Insert empty magazine — catch must engage and lock.</li>
+          <li>Pull slide completely to rear until slide catch locks slide open. Press magazine catch — magazine falls free.</li>
+          <li>Pull back and release slide. Push up on manual safety lever to engage.</li>
+          <li>Press trigger — striker should NOT release.</li>
+          <li>Push down on manual safety to disengage. Press trigger and hold — audible click heard.</li>
+          <li>While holding trigger, pull slide to rear and release. Release trigger — light click as striker resets.</li>
+          <li>Press trigger — loud audible click confirms striker releases.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct nomenclature, in sequence, within time</div>
+          <div class="go-pill nogo">✗ NO-GO: Wrong nomenclature, out of sequence, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M17/M18 Pistol</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W2 Part 2: Shotgun -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W2 · PART 2</span><h3>M500 Series Shotgun — Clear, Disassemble, Assemble & Functions Check</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, Disassemble, Assemble, and Perform a Functions Check on an M500 series Shotgun</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Disassemble)</div><div class="val">Correctly clear and disassemble within <strong>1 minute</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Assemble)</div><div class="val">Correctly assemble and perform functions check within <strong>2 minutes</strong></div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Point weapon safe direction. Ensure weapon on safe (fully to rear).</li>
+          <li>Depress action lock lever, open action by sliding forearm fully rearward. Observe chamber, visually check for ammo, ensure magazine plug is visible.</li>
+          <li>Disassemble onto nomenclature labels: (a) Receiver assembly; (b) Barrel assembly; (c) Magazine cap (M590 only); (d) Trigger housing retainer pin; (e) Trigger mechanism; (f) Cartridge interrupter; (g) Cartridge stop; (h) Bolt slide; (i) Bolt; (j) Fore end assembly; (k) Elevator.</li>
+          <li>Assemble weapon, ensure on safe. Functions check: close action fully (lock fully down). Pull trigger — hammer should NOT fall.</li>
+          <li>Move safety to FIRE. Pull trigger — hammer falls, lock lever fully up.</li>
+          <li>Hold trigger, recork by moving forearm fully rear then forward. Release trigger — hammer should NOT fall.</li>
+          <li>Pull trigger — hammer falls. Release trigger, re-cock — hammer should NOT fall. Move safety to SAFE.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct nomenclature, in sequence, within time, functions check passes</div>
+          <div class="go-pill nogo">✗ NO-GO: Wrong nomenclature, out of sequence, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M500 Shotgun</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W3 Part 2: M249 Operate -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W3 · PART 2</span><h3>M249 Machine Gun — Clear, Load, Fire, Immediate Action, Unload</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, load, fire until stoppage, perform immediate action, expend remaining ammo, unload, and clear an M249</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All steps, in sequence, within <strong>30 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Starting Position</div><div class="val">Prone position, not touching weapon. Weapon free of ammo, on FIRE, bolt forward.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>Clear:</strong> Point safe direction, FIRE. Palm up, pull/hold charging handle to rear. Place on SAFE. Return charging handle forward to locked position. Open feed tray cover, conduct 5-point safety check. Close cover. Pull charging handle to rear, FIRE, press trigger with left hand, ease bolt forward to locked position.</li>
+          <li><strong>Load:</strong> Cant M249 to right. Place first round of belt with open side of links facing down in feed tray groove against cartridge stop. Hold belt with left hand, close feed tray cover with right hand.</li>
+          <li><strong>Engage:</strong> Place on FIRE, engage target.</li>
+          <li><strong>Immediate Action:</strong> Keep on shoulder. Pull charging handle (right hand, palm up) to rear. Observe ejection port — if nothing ejects, lock bolt to rear and clear. If case/link/round ejects, push charging handle forward, squeeze trigger and reengage. Clear weapon if it does not fire.</li>
+          <li><strong>Unload and Clear:</strong> Point safe direction. Pull/hold charging handle to rear, SAFE. Return charging handle forward to locked position. Open feed tray cover, remove ammo belt and loose links. 5-point safety check. Close cover, ensure locks. Pull charging handle to rear, FIRE, press trigger with left hand, ease bolt to locked forward position.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All steps correct, in sequence, within 30 seconds</div>
+          <div class="go-pill nogo">✗ NO-GO: Out of sequence, exceeds time, fails to clear</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M249 Operate / Immediate Action</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W4 Maintain: M240 -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W4 · PART 1</span><h3>M240 Machine Gun — Clear, Disassemble, Assemble & Functions Check</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, Disassemble, Assemble, and Perform a Functions Check on an M240</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Disassemble correctly within <strong>3 minutes</strong>. Assemble and functions check within <strong>3 minutes</strong>.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Point safe direction, safety to "F". Pull cocking handle to rear locking bolt. Push cocking handle forward. Place to "S".</li>
+          <li>Open cover assembly — press/hold feed cover latches, lift cover, remove any ammo. Raise feed tray, inspect chamber. Lower feed tray. Place to "F". Pull/hold cocking handle, depress trigger, ease bolt to closed/locked position.</li>
+          <li>Disassemble onto nomenclature labels: (a) Buttstock/buffer assembly; (b) Bolt/operating rod assembly; (c) Driving spring rod assembly; (d) Trigger housing assembly; (e) Barrel assembly (remove heat shield); (f) Cover assembly; (g) Feed tray; (h) Receiver assembly.</li>
+          <li>Assemble. Functions check: safety to "F", lock bolt to rear via cocking handle. Push cocking handle forward. Place to "S". Depress trigger — bolt should NOT fall.</li>
+          <li>Place to "F". Pull/hold cocking handle, depress trigger, ease bolt to forward/locked position. Close ejection port cover. Candidate verbalizes "complete."</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct nomenclature, in sequence, within 3 min each part</div>
+          <div class="go-pill nogo">✗ NO-GO: Wrong nomenclature, out of sequence, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M240 Disassembly/Assembly</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W4 Part 2: M240 Operate -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W4 · PART 2</span><h3>M240 Machine Gun — Clear, Load, Fire, Immediate Action, Unload</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, load, fire until stoppage, perform immediate action, expend remaining ammo, unload, and clear an M240</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All steps, in sequence, within <strong>30 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Starting Position</div><div class="val">Prone position, not touching weapon. Weapon free of ammo, on FIRE, bolt forward.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>Clear:</strong> Point safe direction, safety "F". Charge: pull cocking handle to rear, locking bolt. Push forward. Place to "S". Open cover, remove any ammo. Raise feed tray, inspect chamber. Lower tray. Place to "F". Pull/hold cocking handle, depress trigger, ease bolt to closed/locked.</li>
+          <li><strong>Load:</strong> Position open side of links down, place link belt on feed tray with first round against cartridge stop, tip pointing toward barrel. Close cover — ensure latches lock and round does not move from stop.</li>
+          <li><strong>Engage:</strong> Place on FIRE, engage target.</li>
+          <li><strong>Immediate Action:</strong> Pull cocking handle to rear, observe ejection port. If case/link/round ejects — push cocking handle forward, press trigger. If nothing ejects — lock bolt to rear, proceed to clear.</li>
+          <li><strong>Unload and Clear:</strong> Point safe direction, safety "F". Charge: pull cocking handle to rear. Place to "S". Open cover, lift feed tray, remove ammo/links/brass. Lower and close cover — ensure locks. Place to "F". Pull/hold cocking handle, depress trigger, ease bolt to closed/locked. Close ejection port cover.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All steps correct, in sequence, within 30 seconds</div>
+          <div class="go-pill nogo">✗ NO-GO: Out of sequence, exceeds time, fails to clear</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M240 Operate / Immediate Action</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W5 Part 1: Identify Grenades -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W5 · PART 1</span><h3>Hand Grenades — Identify Types and Nomenclature</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Identify Hand Grenades — correct name, nomenclature, and purpose</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Correctly identify each grenade within <strong>2 minutes 30 seconds</strong>. 100% accuracy required.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>M67 Fragmentation:</strong> Disables or kills personnel. Explodes 4–5 seconds after safety lever released. Effective casualty radius: 15 meters.</li>
+          <li><strong>MK3A2 Offensive:</strong> Concussion effect in enclosed areas. Used against enemy in bunkers, buildings, fortified areas. Used for blasting and demolition.</li>
+          <li><strong>M84 Diversionary/Flash-Bang Stun:</strong> Disorientation, confusion, loss of hearing. Non-lethal diversionary device. Damages eyesight and night vision in limited visibility.</li>
+          <li><strong>M18 Colored Smoke:</strong> Used for screening and signaling.</li>
+          <li><strong>AN-M14 TH3 Incendiary:</strong> Used to destroy equipment and start fires.</li>
+          <li><strong>ABC-M7A2 / ABC-M7A3 Riot Control:</strong> Used to control riots or disable without serious injury.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: 100% accurate identification within 2:30</div>
+          <div class="go-pill nogo">✗ NO-GO: Any incorrect ID, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Hand Grenade Identification</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W5 Part 3: Grenades through Window/Bunker -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W5 · PART 3</span><h3>Hand Grenades — Employ Through Window, Door, or Bunker</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Employ hand grenades against troops in a building/room/bunker 10 meters away (two M67 Frag Grenades)</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All tasks, in sequence, within <strong>1 minute</strong>. One of two grenades must explode within 5 meters of target.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Identify the target to engage.</li>
+          <li>Select appropriate movement technique; move to a safe, covered position with protection from roll back grenade and enemy fields of fire.</li>
+          <li>Select proper throwing position (overarm, underarm lob, sidearm/skip, flip, or drop in place).</li>
+          <li>Determine the distance to target. Grip grenade — safety lever between 1st and 2nd joints of thumb, pull ring away from palm.</li>
+          <li>Prepare grenade: tilt forward, sweep safety clip away, insert non-throwing hand index/middle finger in pull ring. Hold safety lever firmly. Twist pull ring toward body. Remove safety pin.</li>
+          <li>Throw so grenade is within the opening of the target. Follow through naturally. Seek cover immediately.</li>
+          <li>Prepare second grenade. Reengage if first did not explode within 5 meters of target.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct sequence, ≤1 min, ≥1 of 2 grenades within 5m</div>
+          <div class="go-pill nogo">✗ NO-GO: Out of sequence, exceeds time, neither grenade within 5m</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Grenade Through Window/Bunker</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W6: Claymore Mine -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W6</span><h3>M18A1 Claymore Mine — Emplace, Fire & Recover</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Employ a Claymore Mine. Recover a Claymore mine.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Emplace/Fire)</div><div class="val">Correctly employ and fire, in sequence, within <strong>10 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Recover)</div><div class="val">Correctly recover unfired mine, in sequence, within <strong>5 minutes</strong></div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Emplace and Fire:</strong></p>
+        <ol class="steps-list">
+          <li>Inventory components: M57 firing device, M4 electric blasting cap assembly, M40 test set, M7 bandoleer.</li>
+          <li>Select firing position with cover and unobstructed observation of emplacement site.</li>
+          <li>Perform circuit test on M57 firing device using M40 test set. Move bail to FIRE. Depress handle — observe light. <em>Candidate states "I see the light."</em> Move bail to SAFE.</li>
+          <li>Uncoil ~1 meter of wire from shorting plug end. At 1-meter mark, fold to create loop. Twist loop over index/middle fingers. Push through circle. Secure firing wire from blasting cap side to stake at firing position. Uncoil enough wire to place spool (with blasting cap inside) out of sight under sandbag/tree/hole.</li>
+          <li>Remove M57 with M40 attached. Remove dust covers. Plug firing wire into test set. Move bail to FIRE. Depress — observe light. <em>Candidate states "I see the light."</em> Move bail to SAFE. Disconnect, replace covers, repack.</li>
+          <li>Unroll firing wire from firing position to emplacement site. Assume prone. Open legs to 45 degrees facing enemy. Push legs ~1/3 into ground. Ensure face marked 'FRONT TOWARD ENEMY' faces enemy.</li>
+          <li>Aim: select aiming point ~50 meters in front. Position eye ~6 inches from sight rear. Arm: remove blasting cap from spool, secure firing wire ~1 meter to rear. Unscrew shipping plug priming adapter. Slide slotted end onto firing wire of blasting cap. Pull excess wire through until blasting cap is firmly seated. Screw adapter into detonator well. Check aim unchanged.</li>
+          <li>Camouflage munition and firing wire while moving back to firing position.</li>
+          <li>Fire: seek cover, remove dust cover from firing device. Disconnect shorting plug/dust cover from end of firing wire, connect to firing device. Move bail to FIRE. State "CLAYMORE" twice and quickly squeeze handle.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Recover Unfired Mine:</strong></p>
+        <ol class="steps-list">
+          <li>Ensure firing device bail is in SAFE. Disconnect from wire. Replace shorting plug/dust cover. Place in bandoleer. Untie firing wire from stake at firing site. Move to mine.</li>
+          <li>Remove shipping plug priming adapter by unscrewing. Separate adapter and blasting cap. Reverse shipping plug, screw into detonator well.</li>
+          <li>Remove firing wire from stake at mine site. Place blasting cap into wire connector end and roll onto wire container. Lift mine, secure folding legs. Repack mine and all accessories into M7 bandoleer.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Circuit tested, correctly emplaced/aimed/armed/fired within 10 min; recovered within 5 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Fails circuit test, incorrect orientation, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M18A1 Claymore Mine</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W7: Javelin -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W7</span><h3>M98 Javelin — Prepare to Fire & React to Misfire</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Prepare M98 Javelin for firing. Perform immediate action for a misfire.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Prepare)</div><div class="val">Prepare to fire within <strong>3 minutes 30 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Misfire IA)</div><div class="val">Perform immediate action within <strong>2 minutes</strong></div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Prepare to Fire:</strong></p>
+        <ol class="steps-list">
+          <li>Prepare CLU: ensure power switch OFF. Install CLU battery. Place round on ground, flat end caps down, latch assembly facing up. Kneel on left side of round at forward end, facing forward.</li>
+          <li>Remove protective cover from CLU interface connector. Pull lanyard tab snug. Open day sight and NVS lens covers on CLU.</li>
+          <li>Place CLU round interface bracket in round hooks. Engage CLU and round interface connectors by sliding forward and pressing down on CLU. Rock CLU side-to-side to confirm connected. Pick up Javelin.</li>
+          <li>Remove forward end cap — pull locking pin straight up via wire rope, turn latch release counterclockwise, place cap on ground. Inspect seeker dome. Tip round down to allow debris to fall out. Position open end of round on forward end cap.</li>
+          <li>Power CLU to NIGHT. Wait 2.5–3.5 minutes for NVS to cool. Select firing position.</li>
+          <li>Verify CLU indicators are lit. <em>Candidate verbalizes. Grader: "CLU indicators are flashing."</em> Perform battery warm-up: turn to DAY for 30–60 sec. <em>Grader: "30 seconds has elapsed."</em> Turn OFF then back to NIGHT.</li>
+          <li>Adjust diopter ring for best CLU display clarity. <em>Candidate verbalizes "The Javelin is prepared to engage."</em></li>
+          <li>Squeeze seeker trigger, wait 4 seconds, count aloud. <em>Candidate states "Back blast area clear."</em> Acquire target, lock on, squeeze fire trigger. <em>Grader states "Misfire."</em></li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>React to Misfire (Immediate Action):</strong></p>
+        <ol class="steps-list">
+          <li>Release seeker and fire triggers, attempt to engage again per above. <em>Grader states "Misfire."</em></li>
+          <li>Keep Javelin pointed at target. Back blast area clear.</li>
+          <li>Attempt to engage again. <em>Grader states "Misfire."</em></li>
+          <li>Turn CLU OFF. Note: leave in DAY position for ≥1 second before turning off.</li>
+          <li>Set Javelin on ground pointed at enemy target, CLU handgrips facing up. Keep back blast area clear.</li>
+          <li>Disconnect CLU from round. Move 25 meters away OR move round 25 meters from firing position. <em>Candidate verbalizes.</em></li>
+          <li>Obtain a replacement round. <em>Candidate verbalizes.</em></li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Prepared within 3:30, IA within 2 min, all steps in sequence and verbalized</div>
+          <div class="go-pill nogo">✗ NO-GO: Exceeds time, out of sequence, fails to verbalize required steps</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Javelin Missile System</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- W8: M2 .50 Cal -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag">W8</span><h3>M2 .50 Caliber Machine Gun — Clear, Load, Fire, Immediate Action, Unload</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Clear, load, fire until stoppage, perform immediate action, expend remaining ammo, unload, and clear an M2</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All steps, in sequence, in <strong>1 minute or less</strong></div></div>
+          <div class="task-meta-item"><div class="label">Starting Position</div><div class="val">Seated (tripod) or standing (vehicle). Weapon assembled, headspace/timing set, free of ammo, on FIRE/full auto, bolt forward.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>Clear:</strong> Place trigger block on SAFE, unlock bolt latch release. Raise cover, lift cartridge extractor, remove ammo belt from feed tray. Place extractor down, close cover. Pull/lock bolt to rear, leaving retracting slide handle to rear. Open cover, inspect chamber and T-slot. Grasp retracting slide handle, press bolt latch release, ease bolt forward, close cover.</li>
+          <li><strong>Load:</strong> Ensure bolt forward, SAFE with cover closed. Select automatic mode. Insert double-loop end of ammo belt into feedway until first round is engaged by belt-holding pawl. Pull retracting slide handle fully rearward and release. Pull to rear a second time to fully load. Release handle.</li>
+          <li><strong>Engage:</strong> Place trigger block on FIRE, engage target.</li>
+          <li><strong>Immediate Action (cool weapon — under 200 rounds in 2 min):</strong> Hold weapon on target. Wait 10 seconds in case of hang fire. <em>Candidate verbalizes.</em> Pull retracting handle to rear. Observe ejection — if round/case ejects, continue; if not, go to step 5. Return retracting handle forward. Depress bolt latch if bolt locks to rear. Attempt to reengage, expend remaining ammo.</li>
+          <li><strong>Unload and Clear:</strong> Place trigger block on SAFE, unlock bolt latch release. Look away — raise cover, lift cartridge extractor. Remove ammo belt from feedway. Place extractor down, close cover. Pull/lock bolt to rear, leaving retracting handle to rear. Open cover, inspect chamber and T-slot. Press bolt latch release, ease bolt forward with retracting handle. Close cover.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All steps correct, in sequence, within 1 minute</div>
+          <div class="go-pill nogo">✗ NO-GO: Out of sequence, exceeds time, fails to properly clear</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — M2 .50 Cal Operations</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- MEDICAL LANES -->
+    <div class="section-header" style="margin-top:2.5rem;">
+      <div class="label">Chapter 10</div>
+      <h2>Medical Lane</h2>
+    </div>
+
+    <!-- M1: MEDEVAC -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag medical">M1</span>
+          <h3>Request Medical Evacuation (MEDEVAC / 9-Line)</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Request a Medical Evacuation (MEDEVAC)</div></div>
+          <div class="task-meta-item"><div class="label">Condition</div><div class="val">You are directed to request MEDEVAC for a wounded teammate. Given security of the pickup site and additional guidance.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Prepare to send MEDEVAC within <strong>3 minutes</strong>. Transmit lines 1-5 within <strong>25 seconds</strong> of initial contact. Lines 6-9 within <strong>1 additional minute</strong>. 100% accuracy with proper brevity codes and RTO pronunciation.</div></div>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.875rem; margin-bottom:0.75rem;"><strong>9-Line MEDEVAC Format:</strong></p>
+        <ol class="steps-list">
+          <li><strong>Line 1:</strong> Six-digit grid with zone identifier for pickup site location (accurate within 200 meters)</li>
+          <li><strong>Line 2:</strong> Radio frequency, call sign, and suffix</li>
+          <li><strong>Line 3:</strong> Number of patients by precedence — A+# Urgent, B+# Urgent-Surgical, C+# Priority, D+# Routine, E+# Convenience. State "Break" between categories.</li>
+          <li><strong>Line 4:</strong> Special equipment required — A-None, B-Hoist, C-Extrication Equipment, D-Ventilator</li>
+          <li><strong>Line 5:</strong> Number of patients by type — L+# Litter, A+# Ambulatory. State "Break" between. End with "Over."</li>
+          <li><strong>Line 6:</strong> Security of pickup site (given during condition brief)</li>
+          <li><strong>Line 7:</strong> Method of marking pickup site (candidate must choose based on given choices)</li>
+          <li><strong>Line 8:</strong> Patient nationality and status (from TCCC cards)</li>
+          <li><strong>Line 9:</strong> Terrain description based on site location/map (encrypt if CBRNE environment)</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All 9 lines transmitted correctly, proper brevity codes, within time standards</div>
+          <div class="go-pill nogo">✗ NO-GO: Incorrect line content, wrong brevity codes, exceeds time, improper RTO procedure</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — 9-Line MEDEVAC Request</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- M8: Open Head Wound -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag medical">M8</span>
+          <h3>First Aid for Open Head Wound (CBRNE Environment)</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Treat a casualty with an open head wound</div></div>
+          <div class="task-meta-item"><div class="label">Condition</div><div class="val">CBRNE environment, MOPP level 3. Casualty conscious and alert with simulated head wound, all extremities present. Under indirect fire, behind cover.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Perform all tasks to standard, in sequence, within <strong>5 minutes</strong>, without causing further injury</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Check casualty's level of consciousness: "What is your name? Where are you? What is today's date?" <em>Grader states: "The casualty replies appropriately."</em></li>
+          <li>Position casualty: have them sit up, turn head to side (opposite wound) to prevent bleeding into the mouth.</li>
+          <li>Expose wound by removing helmet if necessary, retaining all MOPP garments. Do NOT clean wound, remove protruding objects, or apply pressure dressing.</li>
+          <li>Do NOT put unnecessary pressure on wound or push any brain matter back into the head (skull). Do NOT touch white (sterile) side of dressing or allow contact with any surface other than wound.</li>
+          <li>Apply Emergency Bandage: place white portion over wound, wrap elastic around head firmly enough to prevent slipping without excessive pressure, secure closure bar.</li>
+          <li>Watch casualty for life-threatening conditions, check for other injuries, treat for shock, and seek medical aid.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All steps correct, in sequence, within 5 minutes, no further injury</div>
+          <div class="go-pill nogo">✗ NO-GO: Applies pressure to wound, touches sterile side, removes MOPP gear, exceeds time</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — Open Head Wound Treatment</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- M2: Care Under Fire -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M2</span><h3>Care Under Fire & Transport Casualty (TCCC/SKED)</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Perform care under fire. Transport and transfer a casualty (SKED litter). Fill out DD Form 1380 TCCC Card.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Care Under Fire)</div><div class="val">Perform Care under Fire, in sequence, within <strong>3 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Transport)</div><div class="val">Transport and transfer, in sequence, within <strong>9 minutes</strong>. No safety violations, no further injury, no lost equipment.</div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Care Under Fire:</strong></p>
+        <ol class="steps-list">
+          <li>Return fire, move to cover, yell distance/direction/description. Direct casualty to return fire, move to cover, and administer self-aid to stop bleeding. <em>Grader states "Fire suppression has been achieved / enemy fire stops."</em></li>
+          <li>Candidate states "Cover me." <em>Grader replies "Got you covered."</em></li>
+          <li>Move casualty (weapon, mission-essential equipment) to cover using Cradle-drop drag or appropriate technique without causing further injury/losing equipment. Position on their back, kneel by head, slide hands under shoulders palms up for firm grip under armpits. Stand up halfway, support head on one forearm. Lift and drag backwards.</li>
+          <li>Apply CAT tourniquet to wounded extremity as high as possible (not capturing shoulder or buttocks). Route band around limb above wound. Pass red tip through inside slit in buckle, pull as tight as possible, secure Velcro. Twist windlass until bleeding stops. <em>Candidate verbalizes.</em> Secure windlass rod in clip, continue routing self-adhering band over rod. Assess for absence of distal pulse. Place "T" and time on casualty with marker. Secure CAT with tape (one full wrap).</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Transport and Transfer:</strong></p>
+        <ol class="steps-list">
+          <li>Prepare SKED litter: place on ground, remove retainer strap, place foot on one end to prevent moving, unroll while bending in half. Perform this to each side ensuring it lays flat. Position handles/straps/dragline outward at head end.</li>
+          <li>Place/secure casualty to SKED litter: position front end beside casualty's head. Roll casualty onto non-CAT side as single unit. Slide litter under casualty. Roll casualty onto back on litter. Ensure centered with spine column aligned. Position strap across body with buckles from litter. Secure straps. Ensure casualty is securely fastened. Reassess CAT.</li>
+          <li>Suppress enemy. <em>Grader states "Fire superiority has been achieved."</em> Candidate states "Cover me." <em>Grader: "Got you covered."</em></li>
+          <li>Drag casualty 50 meters to Casualty Collection Point (CCP). Reassess CAT.</li>
+          <li>Remove DD Form 1380 from IFAK and record all treatments. Front: mark EVAC priority, date, time, mechanism of injury, injury location, TQ arms/legs info. Back: EVAC priority, other treatments, first responder name and last 4 SSN. Secure card to casualty per unit SOP (NOT to body armor).</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All steps in sequence within time standards, no further injury, no safety violations</div>
+          <div class="go-pill nogo">✗ NO-GO: Exceeds time, causes further injury, safety violation, loses equipment</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Care Under Fire / TCCC</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M3: SKED Litter/Airway -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M3</span><h3>Restore Breathing / Pulse & Prepare Casualty Transport (SKED)</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Perform first aid to restore breathing and/or pulse of an unconscious casualty. Prepare transport using hoist-able SKED Basic Rescue System.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All tasks to standard, in sequence, within <strong>8 minutes 30 seconds</strong>, without causing further injury</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Approach casualty, check responsiveness. <em>Grader: "Casualty is unresponsive."</em> Direct bystander to call medical personnel. Direct another to retrieve AED.</li>
+          <li>Position casualty on back, arms down, face up (log roll as single unit). Raise nearest arm, straighten above head. Support back of head/neck, grasp under far arm, pull steadily toward you keeping head/neck in line with torso. Roll as single unit.</li>
+          <li>Place arms at sides. <em>Grader: "Casualty does not appear to be breathing."</em> Open airway using head-tilt/chin lift: kneel beside head/shoulders, palm on forehead, fingers of other hand on bony part of jaw below chin. Tilt head back gently. Release chin pressure to allow mouth to open slightly.</li>
+          <li>Check for breathing: place ear over mouth/nose looking toward chest/stomach. Look for rise/fall, listen for air escaping, feel for airflow. Count respirations for 15 seconds. <em>Grader: "Casualty is not breathing."</em></li>
+          <li>Insert NPA: keep casualty supine head neutral. Select appropriate size (measure nostril to earlobe or nostril to angle of jaw). Lubricate tube with water-based lubricant. Push tip of nose upward, position bevel toward septum. Insert NPA into nostril, advance until flange rests against nostril. Never force — if resistance, try other nostril. <em>Grader: "Casualty is breathing."</em></li>
+          <li>Prepare hoist-able SKED litter, package and secure casualty per SOP (cross straps, foot straps, horizontal lift slings, large locking D-steel carabineer). Perform final safety checks: all 4 cross straps checked, 2 foot straps checked, head strap labeled horizontal lift sling at head, all 4 lift slings even in length, large locking D-carabineer fed through all 4 ends, gate screw screwed down completely and unable to freely open.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Airway opened, NPA inserted, casualty packaged in SKED within 8:30</div>
+          <div class="go-pill nogo">✗ NO-GO: Exceeds time, forces NPA, causes further injury, improper SKED packaging</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — NPA Insertion / SKED Litter</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M4: Heat Injury -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M4</span><h3>Evaluate and Treat a Casualty for Heat Injury</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Identify types, signs, symptoms, and treatment of heat injuries. Treat for heat stroke.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Identify types/signs/symptoms/treatments within <strong>5 minutes</strong>. 100% accuracy for heat cramps. ≥3 correct signs/symptoms for heat exhaustion and heat stroke (no incorrect answers). ≥3 treatments for heat exhaustion. Treat heat stroke within <strong>5 minutes</strong> without further injury.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>Heat Cramps:</strong> Signs/Symptoms: muscle cramps in arms, legs, and/or abdomen. Treatment: move to shaded area and rest; loosen clothing; oral rehydration.</li>
+          <li><strong>Heat Exhaustion:</strong> Signs/Symptoms: profuse sweating and pale/gray/moist/cool skin; headache; weakness; dizziness; loss of appetite or nausea; normal or slightly elevated body temperature (up to 104°F). Treatment: move to shaded area, oral rehydration unless nauseated; loosen/remove clothing and boots; pour water on casualty and fan; cover with ice sheet and elevate legs.</li>
+          <li><strong>Heat Stroke:</strong> Signs/Symptoms: core temperature rising above 106°F within 10–15 min; hot, dry skin; headache; dizziness; nausea; confusion; weakness; loss of consciousness; possible seizures; weak/rapid pulse and respirations. Treatment: <em>Candidate verbalizes "Call for evacuation."</em> Cool with any means available even before taking clothes off (per unit SOP). Remove outer garments/protective clothing. Lay casualty down and elevate legs. Place ice sheets/packs in groin, armpits, and around neck. Immerse in cold water or pour cold water on casualty. Cover all but face with soaked ice sheet. <em>Candidate verbalizes "Evacuate the casualty."</em></li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: 100% accuracy heat cramps, ≥3 correct each for exhaustion/stroke, heat stroke treatment within 5 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Any incorrect answers, exceeds time, causes further injury</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Heat Injury Treatment</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M5: Control Bleeding -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M5</span><h3>Control Bleeding (Tactical Field Care)</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Evaluate casualty using Tactical Field Care and control bleeding</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All tasks to standard, in sequence, within <strong>5 minutes</strong>, without causing further injury</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Perform blood sweep of extremities, neck, armpits, and groin. Expose wounds if bleeding detected. <strong>If second wound is not simulated, Grader identifies location during blood sweep. Failure to sweep that area = NO-GO.</strong></li>
+          <li>Reassess any tourniquets placed during Care Under Fire. <em>Grader: "The wound spurts blood when the limb is moved."</em> Attempt to further tighten existing CAT. <em>Grader: "The CAT is still ineffective."</em> Place second CAT from IFAK side-by-side but above the first tourniquet. Route band around limb side-by-side but above first tourniquet. Pull as tight as possible, secure Velcro. Twist windlass until bleeding stops. <em>Candidate verbalizes.</em> Secure windlass rod, continue routing self-adhering band. Assess for distal pulse. Place "T" and time. Secure CAT with tape.</li>
+          <li>Apply emergency bandage: place white portion down covering wound. Wrap elastic portion around extremity, insert into pressure bar. Pull in opposite direction and apply pressure with pressure bar over wound. Continue wrapping, ensuring all edges of wound pad are covered. Secure closure bar. Ensure applied firmly enough to prevent slipping without tourniquet-like effect.</li>
+          <li>Apply hemostatic dressing to major non-arterial wound bleeding heavily: expose wound by cutting away clothing. Pack Combat Gauze tightly into wound over most actively bleeding site. Remove excess blood with cotton gauze while preserving clots. Apply direct pressure for 3 minutes. <em>Grader: "Three minutes has elapsed, wound is still bleeding."</em> Pack second Combat Gauze. <em>Grader: "Bleeding is under control."</em> Secure hemostatic dressing with pressure dressing.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Full blood sweep, effective CAT application, emergency bandage, hemostatic dressing within 5 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Misses wound during blood sweep, ineffective tourniquet, exceeds time, causes further injury</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Control Bleeding / CAT Tourniquet</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M6: Spinal Injury/Shock -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M6</span><h3>Evaluate and Treat a Casualty for Spinal Injury and Shock</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Identify signs and symptoms of shock. Evaluate and treat a casualty for spinal injury and shock.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Identify ≥6 signs/symptoms of shock (no incorrect answers) within <strong>1 minute</strong>. Apply cervical collar, treat for shock, prepare for transfer within <strong>7 minutes</strong>, without causing further injury.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li><strong>Identify Signs/Symptoms of Shock (must know ≥6):</strong> Sweaty but cool skin; pale skin; restlessness or nervousness; thirst; severe bleeding; confusion; rapid breathing; blotchy blue skin; nausea and/or vomiting.</li>
+          <li>Apply cervical collar: have other soldier kneel at casualty's head and apply in-line stabilization. <em>If notional: Grader states "The other Soldier has the head and neck in-line and immobilized."</em> Reassure casualty. Determine collar size — front height should fit between chin and chest at suprasternal notch. When in place, collar rests on shoulder girdle and provides firm support under both sides of mandible without obstructing airway. Apply collar to supine casualty. Ensure in-line stabilization maintained. Set collar in place around neck, secure Velcro. Maintain in-line stabilization until immobilized on long spine board. Immobilize to spine board with straps across chest, pelvis, and legs. Apply head supports to each side and fasten straps or cravat-like material tightly over head supports and lower forehead and over pads and rigid cervical collar.</li>
+          <li>Assess for shock: assess level of consciousness. <em>Grader: "Casualty does not answer but reacts to pain."</em> Evaluate skin. <em>Grader: "Skin is pale and moist; abdomen is distended."</em> Treat for hemorrhagic shock.</li>
+          <li>Position casualty: move to shelter from direct sunlight. Secure casualty and long spine board to litter before moving. Loosen binding clothing at neck, waist. Prevent from getting chilled or overheated — cover completely with blanket, underneath litter straps. Re-secure patient. Calm and reassure. Watch for life-threatening conditions. Seek next level of medical aid.</li>
+          <li>Record on DD Form 1380: EVAC priority, date, time, mechanism of injury, injury sites on body picture, vital signs (pulse rate/location, respiratory rate, AVPU level of consciousness). Record other treatments (cervical collar). First responder name and last 4 SSN. Secure card to casualty per unit SOP.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: ≥6 shock signs/symptoms, cervical collar applied correctly, treated for shock, within time</div>
+          <div class="go-pill nogo">✗ NO-GO: Fewer than 6 or incorrect answers, collar applied incorrectly, causes further injury, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Spinal Injury / Shock Treatment</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M7: Chest Wound / Needle Decompression -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M7</span><h3>Apply Occlusive Dressing & Perform Needle Chest Decompression</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Treat a chest wound and tension pneumothorax</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All tasks to standard, in sequence, within <strong>10 minutes</strong>, without causing further injury</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Apply occlusive dressing: expose and assess injury. Remove enough clothing to access injury. Place hand over open chest wound to create temporary seal. Apply occlusive dressing from IFAK over wound (first wound found, first wound treated). Ensure material extends 2" beyond edge of wound. Wipe dirt/fluid from skin with gauze. Place dressing on wound, vent directly over wound opening upon full expiration, adhesive side down. Firmly press on skin for a good seal. If using HYFIN vented seal, do not tape to secure. If using Bolin or other vented commercial seal, tape all sides with 2–3 inches of tape. Log roll casualty or have them sit up and examine back for exit wound. Apply occlusive dressing to exit wound using same standards.</li>
+          <li>Verify tension pneumothorax — check for ≥3 of these: (a) difficulty breathing, pain on affected side, or coughing blood. <em>Grader: "Casualty is gasping for air and has pain on wound side."</em> (b) poor respiratory rate/depth, abdomen mildly distended. <em>Grader confirms.</em> (c) crackling sensation on chest. <em>Grader confirms.</em> (d) one side failing to rise normally on inhalation. <em>Grader confirms.</em> (e) bluish skin (cyanosis). <em>Grader confirms.</em></li>
+          <li>Identify needle decompression site: 5th intercostal space (ICS) on lateral chest wall at anterior axillary line (AAL) on same side as injury.</li>
+          <li>Clean site with antimicrobial solution (alcohol or Betadine).</li>
+          <li>Insert needle at 90-degree angle to chest wall. Remove plastic cap from 3.25 inch, 10 or 14-gauge needle and remove cover to needle's flash chamber.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Occlusive dressing applied correctly, tension pneumo identified and needle decompression performed within 10 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Dressing applied incorrectly, wrong needle site, causes further injury, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Occlusive Dressing / Needle Decompression</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M9: Abdominal/Eye Wound -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M9</span><h3>Treat an Open Abdominal Wound and Eye Injuries</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Perform first aid for an abdominal and eye injury</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All tasks to standard, in sequence, within <strong>7 minutes</strong>, without causing further injury</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Check for both entry and exit wounds (should be only one) by sitting casualty up or rolling to side.</li>
+          <li>Position casualty on back, flex knees, turn head to side, keep airway clear in case of vomiting.</li>
+          <li>Expose wound. Pick up any organs on ground using a clean, dry dressing and gently place on abdomen without touching them. Do NOT probe/clean/remove foreign objects or push organs back into body.</li>
+          <li>Apply moist, sterile abdominal dressing. If object extending from wound, do not remove — place as much of wrapper over wound as possible without dislodging or moving. Do NOT place wrapper over object. Ensure dressing is large enough to cover entire mass of protruding organs. Place sterile side of plastic wrapper directly over wound. Wrap tails around casualty's body, completely covering dressing. Tie into nonslip knot at casualty's side or use emergency bandage closure. Ensure secured firmly without applying pressure.</li>
+          <li>Treat for shock: loosen binding clothing. Prevent from getting chilled or overheated. <em>Grader: "Casualty is making vomiting sounds."</em> Roll to side without causing further injuries. <em>Grader: "Vomiting has stopped."</em> Return to supine with knees flexed. Re-secure bandages.</li>
+          <li>Treat eye injuries per Grader prompt: Laceration/Contusion — close lid of affected eye, cover with moist sterile dressing, place field dressing over eye pad. Eyeball injury — cover with sterile dressing soaked in saline, place field dressing over eye pad, cover uninjured eye to prevent sympathetic movement, tell casualty not to squeeze eyelids. Extrusion — cut hole in several layers of dressing, moisten with saline, place so globe protrudes through hole, build up dressing higher than globe, apply Fox eye shield or improvised object (paper cup/cardboard) without pressure on injury site, roller gauze to hold in place, cover uninjured eye.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Organs handled correctly, dressing applied without pressure, eye treated correctly, within 7 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Pushes organs back, removes foreign object, applies pressure to wound/eye, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Abdominal / Eye Wound Treatment</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- M10: Fracture/Burn -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag medical">M10</span><h3>Treat a Fracture and a Burn</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Perform first aid for a fracture and a burn</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">All tasks to standard, in sequence, within <strong>5 minutes</strong>, without causing further injury</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Reassure casualty, explain process of treating fracture. Loosen tight/binding clothing, remove jewelry from limb, place in casualty's pocket.</li>
+          <li>Check for signs of circulation problems below injury: skin color (pale/white/bluish for light-skinned; depress toenail/fingernail beds for dark-skinned, see how fast color returns). Feel injured arm/leg — is it colder than uninjured? Ask about numbness, tightness, or cold sensation.</li>
+          <li>Splint (improvised or SAM, Grader choice): splint in position found unless no circulation below fracture site or limb is grossly angulated — then realign. With one hand supporting fracture site, grasp part of limb farthest from fracture and gently pull traction. Place one splint on each side of arm/leg, pad appropriately. Splints must reach beyond joints above and below fracture. Tie nonslip knots on splint with improvised/actual cravats — do NOT tie directly over fracture. Gently place ≥2 cravats above and ≥2 below fracture. Check for tightness — cravats tight enough to hold splinting materials. Recheck circulation below injury.</li>
+          <li>Sling (actual or improvised, Grader choice): ensure supporting pressure is on uninjured side, hand of supported arm slightly higher than elbow. Recheck circulation below injury.</li>
+          <li>Swathe (Grader choice) if splinted fracture of elbow/leg or fracture cannot be splinted: place swathes above and below fracture, not over it. Apply to arm by wrapping over injured arm, around casualty's back, under uninjured arm, tie ends on uninjured side. Apply to injured leg by wrapping swathes around both legs, tie on uninjured side. Recheck circulation.</li>
+          <li>Treat burn: gently remove clothing to expose wound/burn area, remove jewelry from affected area. Apply sterile dressing directly over burn — place pad directly over wound with white side facing downward, wrap bandage loosely and secure.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Circulation checked, splint/sling/swathe applied correctly, burn treated, within 5 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Misses circulation check, improper splinting, applies pressure to burn, causes further injury, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Fracture Splinting / Burn Treatment</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- PATROL LANES -->
+    <div class="section-header" style="margin-top:2.5rem;">
+      <div class="label">Chapters 11–12</div>
+      <h2>Patrol Lanes</h2>
+    </div>
+
+    <!-- P3: AN/PRC-163 -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag patrol">P3</span>
+          <h3>Tactical Handheld Radio — AN/PRC-163 Programming</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Assemble, load, and program AN/PRC-163 for single channel plain text voice communications. Conduct radio check.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Correctly perform all tasks, in sequence, for Radio 1 using proper RTO pronunciation and procedures within <strong>8 minutes</strong></div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Assemble radio: battery, antennas (Radio 1 antenna is different from Radio 2 — must be on correct radio).</li>
+          <li>Power on radio.</li>
+          <li>Program single channel plain text per provided SOI. Depress release lever, rotate LOS volume knob clockwise. Wait for boot-up, clear warnings.</li>
+          <li>Press 8 "Programming" → RT 1 → SYSTEM PRESETS → SYSTEM PRESET CONFIG → Program Channel Number, Insert Description, Waveform: VULOS → Frequency → enter IAW SOI, Receive only: NO, TX FREQUENCY: USE RX FREQ, TX FREQUENCY (confirm same) → TRAFFIC → VOICE MODE: Clear → MODULATION TYPE: FM → FM DEVIATION: 8.0 kHz → TX POWER: High → SQUELCH TYPE: Tone → EXIT → clear to exit programming mode.</li>
+          <li>Press 3 "MODE" → RT 1 CIPHER MODE: PT → clear back to home page. Change audio settings: Press 7 "OPTIONS" → SYSTEM → AUDIO OPTIONS → RADIO SPEAKER: ENABLED → RADIO SIDE PTT: ENABLED → clear to home page.</li>
+          <li>Conduct radio check on programmed frequency.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Programmed correctly, radio check successful, proper RTO pronunciation, ≤8 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Cannot communicate on frequency, improper RTO pronunciation, exceeds time, wrong antenna on Radio 1</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — AN/PRC-163 Programming</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P6: Range Card -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+          <span class="tag patrol">P6</span>
+          <h3>Range Card Preparation</h3>
+        </div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Prepare a range card for a machine gun</div></div>
+          <div class="task-meta-item"><div class="label">Condition</div><div class="val">Tripod-mounted machine gun at a defensive fighting position with T&E mechanism in a non-CBRNE environment</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Complete marginal info, sketch primary sector, secondary sector, label dead space, record weapon data within <strong>20 minutes</strong>. Directions/deflections accurate within 54 mils. All ranges within 20% margin of error.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Complete marginal information: squad, platoon, company designations (not higher than company). Record direction of magnetic north using magnetic north symbol, orient range card to terrain, determine magnetic north. Record defensive position (primary/alternate/supplementary). Record date/time. Record weapon system type. Record incremental distance of nine range circles.</li>
+          <li>Sketch primary sector of fire using either FPL or PDF. Draw appropriate symbol, two solid lines for left/right limits out to maximum range or 9th range circle.</li>
+          <li>Sketch secondary sector of fire.</li>
+          <li>Label dead space areas within primary sector.</li>
+          <li>Record position of weapon system data.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: All data correct, within 54 mils accuracy, ranges within 20%, completed ≤20 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Missing marginal info, inaccurate directions/ranges, exceeds time</div>
+        </div>
+        <div class="video-section">
+          <div class="video-label">▶ Reference Video — Range Card Preparation</div>
+          <div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P1: Indirect Fire -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P1</span><h3>Adjust Indirect Fire</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Call for indirect fire. Adjust indirect fire. Fire for effect.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Transmit call for fire to FDC within <strong>3 minutes</strong> of target ID. Locate target within 250 meters. State direction within 100 mils/5 degrees with or before first correction. Adjust to within 50 meters using ≥2 but ≤6 bracketing corrections. Call each adjustment within 45 seconds of previous round impact. End mission within 30 seconds of final adjusting round impact. 100% accuracy with proper RTO pronunciation.</div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Transmit the Call for Fire:</strong></p>
+        <ol class="steps-list">
+          <li>Plot your location on the map. Determine direction to target using compass. Estimate distance to target using mil-relation method based on known target size. Plot enemy location on map.</li>
+          <li>Transmit call for fire to FDC using three transmissions: (a) Observer ID and warning order; (b) Eight-digit grid to target location — <strong>must be accurate within 250 meters</strong>; (c) Target description, method of engagement, and method of fire and control (direction if desired).</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Adjust Fire:</strong></p>
+        <ol class="steps-list">
+          <li>If not already sent, give direction to target within 100 mils or 5 degrees as a four-digit number.</li>
+          <li>Spot each round as right or left, over or short of target. Determine corrections using OT (Observer-Target) factor: measure horizontal deviation in mils using binocular reticle pattern, divide by 1,000. If OT ≥ 1,000 meters, express to nearest whole number; if less than 1,000 meters, to nearest 1/10. Multiply OT factor by deviation measured in mils to produce deviation corrections in meters.</li>
+          <li>When first range spotting is observed, make range correction to result in range spotting in opposite direction. <strong>NO-GO if candidate does not bracket correctly.</strong></li>
+          <li>Continue splitting range bracket until 100-meter bracket is split or range-correct spotting is observed, maintaining deviation online. Transmit all corrections in meters. Grader states "Shot over" and moves to new impact location; candidate replies "Shot out."</li>
+          <li>Bracketing guide: >400m → add/drop 800m; >200m but <400m → add/drop 400m; >100m but <200m → add/drop 200m; <100m → add/drop 100m; then add/drop 50m for Fire for Effect.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Fire for Effect:</strong></p>
+        <ol class="steps-list">
+          <li>When 100-meter bracket is split or range-correct spotting made, transmit fire for effect.</li>
+          <li>Observe results. Give brief description of what happened to target. Example: "EOM, TARGET DESTROYED, ESTIMATE TWO CASUALTIES, OVER."</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Call for fire within 3 min, target located within 250m, correct adjustments, mission ended within 30 sec</div>
+          <div class="go-pill nogo">✗ NO-GO: Exceeds time, grid inaccurate beyond 250m, does not bracket correctly, improper RTO procedures</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Call for Indirect Fire</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P2: Move Under Direct Fire -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P2</span><h3>Move Under Direct Fire</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Move under direct fire</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Correctly and safely perform all steps, in sequence, within <strong>5 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Starting Position</div><div class="val">Full EIB uniform, one magazine of blank rounds, sling on weapon. 100-meter route with natural and man-made obstacles.</div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Select a route adhering to team leader instructions. Search terrain to front for good firing positions. Select best route to positions. <em>Grader prompt.</em></li>
+          <li>Communicate movement intent to buddy/team leader using voice or hand and arm signals. Return fire, move to cover, yell distance, direction, and description.</li>
+          <li>Suppress the enemy as required throughout the movement.</li>
+          <li>Conduct movement using the appropriate technique for terrain and enemy situation. <strong>Incorrect technique for circumstances or incorrect sequence of subtasks = NO-GO.</strong><br>
+            <strong>High Crawl</strong> (good cover/concealment but enemy fire prevents standing): body off ground on forearms and lower legs, cradle weapon in arms keeping muzzle off ground, knees well behind buttocks, move by alternately advancing right elbow/left knee and left elbow/right knee.<br>
+            <strong>Low Crawl</strong> (very low cover/concealment, enemy fire or observation prevents rising): body flat as possible, grasp sling at upper swivel with firing hand keeping muzzle off ground, handguard on forearm, move by pushing both arms forward while pulling firing-side leg forward; pull on ground with both arms while pushing with firing-side leg.<br>
+            <strong>Rush (3-5 Second Rush / Point, Post, Sprawl)</strong> (open area, time is critical): raise head, select next position; lower head, draw arms in, pull firing-side leg forward, raise body; get up quickly, run 3–5 seconds to next position, plant both feet; acquire target, post non-firing hand on ground rear/forward lunge, kick legs rearward and out so body lays naturally in good firing position, reacquire target.</li>
+          <li>Occupy firing position within 100 meters of enemy position and engage.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct technique for terrain/enemy situation, in sequence, within 5 minutes</div>
+          <div class="go-pill nogo">✗ NO-GO: Wrong technique for circumstances, out of sequence, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Move Under Direct Fire</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P4: DAGR Operations -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P4</span><h3>Defense Advanced GPS Receiver (DAGR) Operations</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Load two months of crypto keys into DAGR, restrict to secure satellites only, enter mission duration, enter waypoints, create a route, operate when satellite signals are weak.</div></div>
+          <div class="task-meta-item"><div class="label">Standard</div><div class="val">Correctly perform all tasks within <strong>15 minutes</strong></div></div>
+        </div>
+        <ol class="steps-list">
+          <li>Load current month's and next month's crypto keys into the DAGR using SKL.</li>
+          <li>Restrict DAGR to use only secure satellites.</li>
+          <li>Enter mission duration.</li>
+          <li>Mark present position as a waypoint.</li>
+          <li>Enter three waypoints given (provided as 10-digit grids from SOI).</li>
+          <li>Create a route using all four waypoints in the correct order.</li>
+          <li>Place DAGR in Average Mode.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Correct crypto loaded, restricted to secure satellites, all waypoints entered, route created, Average Mode set, within 15 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Wrong crypto, wrong satellite restriction, incorrect waypoints, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — DAGR Operations</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P5: Camouflage & Visual Signals -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P5</span><h3>Camouflage and Visual Signaling Techniques</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Subtly employ realistic camouflage. Demonstrate 15 visual signaling techniques.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Camouflage)</div><div class="val">Correctly apply within <strong>10 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Visual Signals)</div><div class="val">Correctly demonstrate each of the 15 visual signaling techniques within <strong>10 seconds</strong> of receiving prompt</div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Camouflage:</strong></p>
+        <ol class="steps-list">
+          <li>Employ realistic camouflage that resembles the background without overdoing.</li>
+          <li>Use natural or artificial materials to break up regular shapes, outlines, and equipment.</li>
+          <li>Reduce possible shine by covering/removing items that reflect light.</li>
+          <li>Blend colors with surroundings — objects should not contrast with background.</li>
+          <li>Camouflage exposed skin: cover skin oils using paint sticks even with very dark skin. Use color chart when applying paint on face. Paint high, shiny areas (forehead, cheekbones, nose, ears, chin) with dark color. Paint low, shadow areas (around eyes, under nose, under chin) with light color. Paint exposed skin on neck, arms, and hands with irregular pattern. Note: Do NOT use oils, insect repellant, mud, motor oil, or field expedient paints for EIB.</li>
+          <li>Camouflage uniform and helmet: roll sleeves down, fasten all buttons/zippers/Velcro. Attach leaves, grass, small branches to uniform/helmet to distort shapes and blend. Wear unstarched uniforms. Do not wear excessively faded/worn uniforms.</li>
+          <li>Camouflage personal equipment: cover/remove shiny items, secure items that rattle, break up shape of large/bulky equipment.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Key Visual Signaling Techniques (15 will be tested from this list):</strong></p>
+        <ol class="steps-list">
+          <li><strong>Disperse:</strong> Extend arm horizontally. Wave arm and hand to front, left, right, and rear. Point toward direction of each movement.</li>
+          <li><strong>Assemble/Rally:</strong> Raise arm vertically overhead, turn palm to front, wave in large horizontal circles.</li>
+          <li><strong>Join me / Follow me / Come forward:</strong> Point toward person/unit, beckon by holding arm horizontally to front with palm up, motion toward body.</li>
+          <li><strong>Increase speed / Double time / Rush:</strong> Raise fist to shoulder, thrust fist upward to full extent of arm and back to shoulder level rapidly, several times.</li>
+          <li><strong>Quick time:</strong> Extend arm horizontally sideward, turn palm to front, wave arm slightly downward.</li>
+          <li><strong>Halt:</strong> Raise hand to shoulder height with palm facing forward, fingers together extended upward, hold.</li>
+          <li><strong>Freeze / Stop:</strong> Raise fist at shoulder level.</li>
+          <li><strong>Down / Take cover:</strong> Extend arm toward soldiers, palm down, move arm downward several times.</li>
+          <li><strong>Wedge formation:</strong> Extend both arms down and to the sides at 45 degrees.</li>
+          <li><strong>Column / File formation:</strong> Point arm overhead to rear.</li>
+          <li><strong>Line formation:</strong> Extend arms horizontally to sides, palms forward.</li>
+          <li><strong>Echelon right:</strong> Extend right arm 45 degrees down to right, left arm 45 degrees up to left.</li>
+          <li><strong>Echelon left:</strong> Extend left arm 45 degrees down to left, right arm 45 degrees up to right.</li>
+          <li><strong>Enemy in sight:</strong> Raise arm and fist to shoulder, point in direction of enemy.</li>
+          <li><strong>I am ready / All clear:</strong> Raise hand, palm outward, thumb and forefinger forming a circle, other fingers extended.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Camouflage applied within 10 min, each of 15 signals demonstrated within 10 seconds of prompt</div>
+          <div class="go-pill nogo">✗ NO-GO: Incorrect camouflage application, misses signal within 10 seconds, uses prohibited materials</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Camouflage & Visual Signals</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P7: MOPP / Chemical Operations -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P7</span><h3>Chemical and Biological Operations — MOPP & Decontamination</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Assume MOPP level 3. Decontaminate skin and equipment (assuming MOPP level 4).</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Don Mask)</div><div class="val">Don, clear, and seal mask within <strong>9 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (MOPP 4 Decon)</div><div class="val">Decontaminate skin using RSDL within <strong>2 minutes</strong>. Decontaminate individual equipment using M334 or M295 within <strong>5 minutes</strong>.</div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Assume MOPP Level Three — Don Mask (9-second standard):</strong></p>
+        <ol class="steps-list">
+          <li>Stop breathing and close eyes. <strong>Nine-second time standard starts.</strong></li>
+          <li>Remove helmet — place between legs above knees OR hold rifle between legs and place helmet on muzzle.</li>
+          <li>Take off glasses and place in helmet, if applicable.</li>
+          <li>Open mask carrier with non-firing hand. Grasp mask assembly with firing hand and remove from carrier.</li>
+          <li>Place chin in chin pocket, press face piece tight against face.</li>
+          <li>Hold mask assembly tightly against face. Grasp harness tab, pull harness over and down head as far as possible. Ensure head harness is centered on crown of head and temple straps are approximately parallel to ground.</li>
+          <li>Grasp loose end of cheek straps, one at a time, and pull until strap feels tight. Both straps approximately equal length when complete.</li>
+          <li>Clear mask: seal outlet disk valve by placing one hand over outlet valve cover assembly. Blow out hard to ensure contaminated air is forced out around edges of face piece.</li>
+          <li>Seal mask: cover both filter inlet ports with palms of hands and breathe in. Ensure mask assembly collapses against face. Resume breathing. <strong>Nine-second time standard stops.</strong></li>
+          <li>Give alarm: shout "Gas, Gas, Gas." Give appropriate hand-and-arm signal per unit SOP. Close mask carrier.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Assume MOPP Level Four — Decontaminate Skin (2-minute standard):</strong></p>
+        <ol class="steps-list">
+          <li>Seek overhead cover or use poncho. Decontaminate hands, face, and inside of mask using RSDL packet. Remove one RSDL packet from carrying pouch.</li>
+          <li>Apply RSDL per instructions (wipe method — standard). Safety: avoid contact with eyes and wounds; if contact occurs, rinse with water immediately.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Decontaminate Individual Equipment (5-minute standard using M334 or M295):</strong></p>
+        <ol class="steps-list">
+          <li>Decontaminate individual equipment using M334 or M295 per applicable TM/instructions. All steps performed in sequence.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Mask donned/cleared/sealed within 9 sec, skin decon within 2 min, equipment decon within 5 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Exceeds time standards, improper mask seal, out of sequence</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — MOPP Gear / Mask Operations</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P8: Resection / Military Maps -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P8</span><h3>Resection and Military Maps</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Determine your location by resection. Identify terrain features, colors, and contour lines. Identify 22 topographic symbols.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Resection)</div><div class="val">Determine correct six-digit grid by map/compass method or straight edge method within <strong>5 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Terrain/Colors)</div><div class="val">Identify 5 major, 3 minor, and 2 supplementary terrain features; 6 colors; 3 contour line types within <strong>5 minutes</strong> — 100% accuracy</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Topo Symbols)</div><div class="val">Correctly identify 22 topographic symbols within <strong>10 minutes</strong></div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Resection (Map and Compass Method):</strong></p>
+        <ol class="steps-list">
+          <li>Orient map on flat surface using compass. Identify ≥2 well-defined points on ground. Mark these on map.</li>
+          <li>Plot back azimuths: determine magnetic azimuth from your location to one defined point. Convert to grid azimuth. Convert to back grid azimuth. Place index point of protractor on well-defined point. Align protractor's 0–180 degree line to top of map's North-South grid line. Ensure 0-degree mark points north. Place tick mark on map beside number on protractor corresponding to computed back grid azimuth. Draw straight line from well-defined point through tick mark and beyond. Repeat for each well-defined point.</li>
+          <li>Identify the point where lines intersect as your location. Determine the six-digit grid coordinates to this location.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Identify Terrain Features and Map Colors:</strong></p>
+        <ol class="steps-list">
+          <li><strong>5 Major:</strong> Hill, Saddle, Valley, Ridge, Depression.</li>
+          <li><strong>3 Minor:</strong> Draw, Spur, Cliff.</li>
+          <li><strong>2 Supplementary:</strong> Cut, Fill.</li>
+          <li><strong>6 Colors:</strong> Blue (hydrography/water); Black (cultural/manmade features, labels); Green (vegetation); Brown (relief features, contours, cultivated land on red-light-readable maps); Red (cultural features, populated areas, main roads, boundaries on older maps); Red-Brown (cultural features, all relief features, non-surveyed spot elevations, contour lines on red-light-readable maps).</li>
+          <li><strong>3 Contour Lines:</strong> Index, Intermediate, Supplementary.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Identify 22 Topographic Symbols (marginal information):</strong></p>
+        <ol class="steps-list">
+          <li>Sheet name, sheet number, series name, scale, series number, edition number, index to boundaries, adjoining sheets diagram, elevation guide, declination diagram, bar scales, contour interval note, spheroid note, grid note, projection note, vertical datum note, horizontal datum note, control note, preparation note, printing note, grid reference box, unit imprint and symbol.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Location correctly determined, 100% accuracy terrain/colors, 22 topo symbols identified, within time</div>
+          <div class="go-pill nogo">✗ NO-GO: Incorrect grid, any wrong terrain/color ID, misidentified topo symbol, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — Map Reading / Resection</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P9: PVS-14 Night Vision -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P9</span><h3>Operate AN/PVS-14 Monocular Night Vision Device</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Prepare, mount, and operate AN/PVS-14. Identify characters in no/low light. Stow AN/PVS-14.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Operate)</div><div class="val">Place NVD into operation under normal conditions in <strong>1 minute</strong> while wearing helmet</div></div>
+          <div class="task-meta-item"><div class="label">Standard (ID Characters)</div><div class="val">Correctly identify and record 3 alpha/numeric symbols in no/low light with 100% accuracy in <strong>30 seconds</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (Stow)</div><div class="val">Properly stow AN/PVS-14 in sequence in <strong>1 minute</strong> in lighted conditions</div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Operate AN/PVS-14 (helmet mounted — 1-minute standard):</strong></p>
+        <ol class="steps-list">
+          <li>Don the helmet (will maintain helmet on until step 3). <strong>One-minute time starts.</strong></li>
+          <li>Place NVD in socket of helmet mount. Steps 1-8 may be done in any sequence: (a) Depress side buttons (or press side lever on metal mount) to set eye relief; (b) Move NVD fore or aft until eyecup comfortably seals around eye; (c) Turn NVD ON; (d) Rotate diopter adjustment for clearest view of image intensifier screen; (e) Adjust eye relief distance; (f) Press side buttons (or press down on side lever on metal mount); (g) Slide NVD fore or aft to obtain full field of view; (h) Adjust objective lens focus until sharp image obtained.</li>
+          <li>Grasp helmet tilt-and-flip-up assembly and rotate upward and rearward until latch is firmly engaged. (NVD will automatically power off when flipped up.) Grasp tilt-and-flip assembly, rotate downward and forward until latch firmly engaged. Turn power switch to ON to resume viewing.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Identify 3 Alpha/Numeric Symbols (30-second standard):</strong></p>
+        <ol class="steps-list">
+          <li>Grader exposes 3 distinct letter/number combinations. <strong>30-second time starts.</strong> Candidate records all three exposed letter/number combinations on provided grade sheet then steps back when complete.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Stow AN/PVS-14 (1-minute standard):</strong></p>
+        <ol class="steps-list">
+          <li>Turn NVD OFF. <strong>One-minute time starts.</strong></li>
+          <li>Remove NVD from headset or helmet mount.</li>
+          <li>Remove battery or batteries.</li>
+          <li>Inspect battery compartment for corrosion or moisture.</li>
+          <li>Replace battery cap.</li>
+          <li>Remove eyecup, demist shield, sacrificial window, compass or 3X magnifier (if items are unit BII).</li>
+          <li>Replace eyepiece and objective lens cap.</li>
+          <li>Ensure monocular is clean and dry before placing into carrying case.</li>
+          <li>Replace all equipment in the carrying case.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: NVD operational within 1 min, 3 characters correctly identified within 30 sec, properly stowed within 1 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Any character misidentified, exceeds any time standard, improper stowage sequence</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — AN/PVS-14 Operations</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+    <!-- P10: SPOTREP / Man Pack Radio -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title"><span class="tag patrol">P10</span><h3>Transmit a SPOT Report with a Tactical Man Pack Radio</h3></div>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <div class="task-meta">
+          <div class="task-meta-item"><div class="label">Task</div><div class="val">Assemble and load COMSEC into a tactical man pack radio. Program for LOS and SAT voice communications. Conduct LOS radio check. Transmit a SPOTREP.</div></div>
+          <div class="task-meta-item"><div class="label">Standard (Radio)</div><div class="val">Assemble, load, program, and conduct LOS radio check within <strong>5 minutes</strong></div></div>
+          <div class="task-meta-item"><div class="label">Standard (SPOTREP)</div><div class="val">Correctly transmit SPOTREP in sequence using proper RTO pronunciation and procedures within <strong>10 minutes</strong></div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:.75rem;"><strong>Assemble, Load, Program, and Radio Check:</strong></p>
+        <ol class="steps-list">
+          <li>Assemble and power on radio: battery, LOS antenna, headset/external microphone/speaker.</li>
+          <li>Load correct COMSEC keys for the appropriate week into the radio using an SKL.</li>
+          <li>Program one secure (SC; CT) operational frequency into the radio according to SOI.</li>
+          <li>Conduct radio check. Note: NO-GO if unable to communicate on frequency or uses improper RTO pronunciation/procedures.</li>
+        </ol>
+        <p style="color:var(--text-muted);font-size:.875rem;margin:1rem 0 .5rem;"><strong>Send SPOTREP (11 Lines):</strong></p>
+        <ol class="steps-list">
+          <li><strong>LINE 1:</strong> Date-time group (DTG) of report submission.</li>
+          <li><strong>LINE 2:</strong> Reporting unit and method of observation: unaided, binoculars, infrared, thermal, night vision device, UAS, or other. Follow with narrative if needed.</li>
+          <li><strong>LINE 3:</strong> Size of detected element — Persons: Military/Civilian; Vehicles: Military/Civilian; Equipment: Military/Civilian.</li>
+          <li><strong>LINE 4:</strong> Activity of detected element at DTG of report (sub-type if applicable): attacking, ambush (IED/sniper/etc.), indirect fire, CBRN, defending, moving, stationary, cache, civilian, personnel recovery, or other.</li>
+          <li><strong>LINE 5:</strong> Location — grid coordinate with MGRS grid zone designator of detected element activity or event observed. <strong>Must send correct, complete six-digit grid.</strong> Candidate plots location on map, determines direction to target using compass, estimates distance using mil-relation method, plots enemy location on map.</li>
+          <li><strong>LINE 6:</strong> Unit — detected element unit, organization, or facility. If not identified, describe in detail including uniform, vehicle markings, or other identifying information: Conventional, Irregular, Coalition, Host Nation, NGO, Civilian, or Facility.</li>
+          <li><strong>LINE 7:</strong> Time (DTG of observation).</li>
+          <li><strong>LINE 8:</strong> Equipment element observed and amplifying sub-type: ADA (MANPADS/other), Artillery, Armored track vehicle, Armored wheel vehicle, Infantry weapon, Aircraft (RW/FW/UAS), Mine/IED, CBRN, Supplies (class III/V), Civilian, Other. If unknown, describe in detail.</li>
+          <li><strong>LINE 9:</strong> Assessment — reason for/purpose of activity and threats/opportunities for friendly forces.</li>
+          <li><strong>LINE 10:</strong> Narrative — actions taken: attack/withdraw/observe/other. Potential for subsequent reports: air support/BDA/call for fire/casualty report/EOD support/MEDEVAC/other.</li>
+          <li><strong>LINE 11:</strong> Authentication per SOP. Send SPOTREP to next higher element.</li>
+        </ol>
+        <div class="go-nogo-row">
+          <div class="go-pill go">✓ GO: Radio programmed and check successful within 5 min; SPOTREP all 11 lines correct, proper RTO procedures, within 10 min</div>
+          <div class="go-pill nogo">✗ NO-GO: Cannot communicate on frequency, incorrect grid, improper RTO pronunciation, exceeds time</div>
+        </div>
+        <div class="video-section"><div class="video-label">▶ Reference Video — SPOTREP / Man Pack Radio</div><div class="video-placeholder"><div class="icon">▶</div><span>Add YouTube embed ID here</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PHASE 4 -->
+<div id="page-phase4" class="page">
+  <div class="page-title">
+    <div class="breadcrumb">Phase 04 · ESB</div>
+    <h2>12-Mile Ruck March & Final Event</h2>
+    <p>The final phase of the EIB test. Not retestable.</p>
+  </div>
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-box"><div class="label">Distance</div><div class="value">12 Miles</div><div class="sub">IAW ATP 3-21.18</div></div>
+      <div class="info-box"><div class="label">Time Standard</div><div class="value">3:00:00</div><div class="sub">Three hours or less</div></div>
+      <div class="info-box"><div class="label">Final Event</div><div class="value">≤5 MIN</div><div class="sub">Must start within 5 min of completing ruck</div></div>
+      <div class="info-box"><div class="label">Retestable</div><div class="value">NO</div><div class="sub">Failure = eliminated</div></div>
+    </div>
+
+    <div class="standard-block danger">
+      <h4>⚠ Not Retestable</h4>
+      <p>The 12-mile Foot March and Final Event is NOT retestable. All candidates must successfully complete the 12-mile Foot March in three hours or less, immediately followed by the Final Event, which must be started within five minutes of completing the march.</p>
+    </div>
+
+    <div class="section-header" style="margin-top:2rem;">
+      <div class="label">Conditions</div>
+      <h2>Route Requirements</h2>
+    </div>
+
+    <div class="standard-block">
+      <h4>Route Standards</h4>
+      <ul>
+        <li>Route must be exactly 12 miles in length, clearly marked, easily identifiable by candidates</li>
+        <li>Length verified by unit personnel using two military issued GPS devices</li>
+        <li>Must be validated by the EIB Test Manager</li>
+        <li>Route should be closed to vehicular traffic; if not, positive safety control measures required</li>
+        <li>Medics stationed along route, ambulances available</li>
+        <li>Sufficient water points established IAW Commander's DRAW</li>
+        <li>Turn-around points must be easily recognizable and allow candidates to turn around without impeding each other</li>
+        <li>At least two official timing devices calibrated for the foot march</li>
+      </ul>
+    </div>
+
+    <div class="standard-block warning">
+      <h4>Ruck Training Tips</h4>
+      <ul>
+        <li>Build up progressively — follow the PT plan ruck schedule (3 mi → 5 mi → 6 mi → 8 mi)</li>
+        <li>Ensure ruck fits properly — tight enough not to bounce, padded hip belt carrying the weight</li>
+        <li>Break in your boots well before test day</li>
+        <li>Practice with the same weight you'll carry on test day</li>
+        <li>Know your pace — you need ~4.0 mph average to finish in 3 hours</li>
+        <li>Sock system — wool liner + moisture-wicking outer. Prevent blisters</li>
+        <li>Toenails trimmed — long toenails cause significant pain on long rucks</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PT PLAN -->
+<div id="page-pt" class="page">
+  <div class="page-title">
+    <div class="breadcrumb">Appendix B · ESB</div>
+    <h2>4-Week PT Training Plan</h2>
+    <p>Mon–Fri training schedule progressively building EPFA and ruck capacity. Warm-up: Preparation Drill IAW FM 7-22 daily.</p>
+  </div>
+  <div class="container">
+
+    <div class="standard-block warning">
+      <h4>Daily Warm-Up (All Weeks, All Days)</h4>
+      <p>Preparation Drill IAW FM 7-22: Bend & Reach ×5, Rear Lunge ×5, High Jumper ×5, Rower ×5, Squat Bender ×5, Windmill ×5, Forward Lunge ×5, Prone Row ×5, Bent-Leg Body Twist ×5, Push-Up ×5.</p>
+    </div>
+
+    <div class="standard-block">
+      <h4>Daily Recovery (All Weeks, All Days)</h4>
+      <p>Recovery Drill IAW FM 7-22: Overhead Arm Pull, Rear Lunge (hold), Extend & Flex, Thigh Stretch, Single-Leg Over — each 20–30 sec hold.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- WEEK 1 -->
+    <div class="week-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'grid' : 'none'">
+      <h3>Week 1</h3>
+      <span class="focus-tag">RUCK: 3-MILE MARCH | FOCUS: EPFA INTRO</span>
+    </div>
+    <div class="day-grid">
+      <div class="day-card">
+        <div class="day-name">Monday</div>
+        <div class="modality">ENDURANCE · Russo's Field</div>
+        <ul>
+          <li>ESB Offsite PT</li>
+          <li>5-Mile Run</li>
+          <li>20 min mobility</li>
+          <li>Cool-down stretching</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Tuesday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Flat dumbbell bench: 3×8-12</li>
+          <li>Incline dumbbell press: 4×12,10,8,8</li>
+          <li>Standing lateral DB raises w/ both arms at same time: 4×10-15 reps</li>
+          <li>Up-right rows: 5×8-10</li>
+          <li>Seated low cable row: 4×8-10</li>
+          <li>Lat pulldowns: 4×10-12 reps (2 sec negative, 1 sec positive)</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Wednesday</div>
+        <div class="modality">LOW IMPACT CARDIO · Gym</div>
+        <ul>
+          <li>500m Freestyle swim</li>
+          <li>Board training / combat swimmer stroke / modified breaststroke</li>
+          <li>Tread water 10-15 min</li>
+          <li>OR: Cycle workout</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Thursday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Leg press: 2 warm-up sets 4 working sets 10,12,12,10 reps (5 sec negative, 2 sec positive)</li>
+          <li>Leg extensions: 4×15-17 reps (3 sec negative, 1 sec positive)</li>
+          <li>High bar smith machine squat: narrow stance 4×12-16 reps</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Friday</div>
+        <div class="modality">RUCK CAPACITY · Russo's Field</div>
+        <ul>
+          <li>ESB Offsite PT</li>
+          <li>3-Mile Ruck March</li>
+          <li>20 min mobility</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="week-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'grid' : 'none'">
+      <h3>Week 2</h3>
+      <span class="focus-tag">RUCK: 1-MILE MARCH + RUN | FOCUS: EPFA SIM</span>
+    </div>
+    <div class="day-grid">
+      <div class="day-card">
+        <div class="day-name">Monday</div>
+        <div class="modality">ENDURANCE · Russo's Field</div>
+        <ul>
+          <li>1-mile Ruck March ~35 lbs</li>
+          <li>20 min mobility</li>
+          <li>EIB Phase first</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Tuesday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Flat DB bench: 4×8-12</li>
+          <li>Incline DB press: 4×12,10,8,8</li>
+          <li>Standing lateral DB raises: 4×10-15</li>
+          <li>Up-right rows: 5×8-10</li>
+          <li>Seated low cable row: 4×8-10</li>
+          <li>Lat pulldowns: 4×10-12</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Wednesday</div>
+        <div class="modality">LOW IMPACT CARDIO · Gym</div>
+        <ul>
+          <li>500m Freestyle</li>
+          <li>Board training / combat swimmer / modified breaststroke</li>
+          <li>Tread water 10-15 min</li>
+          <li>OR: Cycle workout</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Thursday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Leg press: 2 warm-up + 4 working sets 12,12,10 (5 sec neg, 2 sec pos)</li>
+          <li>Leg extensions: 4×13-15 (3 sec neg, 1 sec pos)</li>
+          <li>High bar smith machine squat: narrow stance 4×12-16</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Friday</div>
+        <div class="modality">RUCK CAPACITY · Russo's Field</div>
+        <ul>
+          <li>5-mile Ruck March ~35 lbs</li>
+          <li>20 min mobility</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="week-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'grid' : 'none'">
+      <h3>Week 3</h3>
+      <span class="focus-tag">RUCK: 5-MILE MARCH ~50 LBS | FOCUS: STRENGTH</span>
+    </div>
+    <div class="day-grid">
+      <div class="day-card">
+        <div class="day-name">Monday</div>
+        <div class="modality">ENDURANCE · Russo's Field</div>
+        <ul>
+          <li>1-mile Ruck March ~50 lbs</li>
+          <li>20 min mobility</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Tuesday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Flat DB bench: 4×8-12</li>
+          <li>Incline DB press: 4×12,10,8,8</li>
+          <li>Standing lateral DB raises: 4×10-15</li>
+          <li>Up-right rows: 5×8-10</li>
+          <li>Seated low cable row: 4×8-10</li>
+          <li>Lat pulldowns: 4×10-12</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Wednesday</div>
+        <div class="modality">LOW IMPACT CARDIO · Gym</div>
+        <ul>
+          <li>500m Freestyle</li>
+          <li>Board training / modified breaststroke</li>
+          <li>Tread water 10-15 min</li>
+          <li>OR: Cycle workout</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Thursday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Leg press: 2 warm-up + 4 sets 13-15 reps (5 sec neg, 2 sec pos)</li>
+          <li>Leg extensions: 4×15-15 (3 sec neg, 1 sec pos)</li>
+          <li>High bar smith machine squat: narrow stance 4×12-16</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Friday</div>
+        <div class="modality">RUCK CAPACITY · Russo's Field</div>
+        <ul>
+          <li>5-mile Ruck March ~50 lbs</li>
+          <li>20 min mobility</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WEEK 4 -->
+    <div class="week-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'grid' : 'none'">
+      <h3>Week 4</h3>
+      <span class="focus-tag">RUCK: 6-MILE MARCH ~55 LBS | FOCUS: PEAK PREP</span>
+    </div>
+    <div class="day-grid">
+      <div class="day-card">
+        <div class="day-name">Monday</div>
+        <div class="modality">ENDURANCE · Russo's Field</div>
+        <ul>
+          <li>6-mile Ruck March ~55 lbs</li>
+          <li>20 min mobility</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Tuesday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Flat DB bench: 4×8-12</li>
+          <li>Incline DB press: 4×12,10,8,8</li>
+          <li>Standing lateral DB raises: 4×10-15</li>
+          <li>Up-right rows: 5×8-10</li>
+          <li>Seated low cable row: 4×8-10</li>
+          <li>Lat pulldowns: 4×10-12</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Wednesday</div>
+        <div class="modality">LOW IMPACT CARDIO · Gym</div>
+        <ul>
+          <li>500m Freestyle</li>
+          <li>Board training / modified breaststroke</li>
+          <li>Tread water 10-15 min</li>
+          <li>OR: Cycle workout</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Thursday</div>
+        <div class="modality">WORK CAPACITY · Gym</div>
+        <ul>
+          <li>Leg press: 2 warm-up + 4 sets applying 13-15 reps (5 sec neg, 2 sec pos)</li>
+          <li>Leg extensions: 4×15-15 (3 sec neg, 1 sec pos)</li>
+          <li>High bar smith machine squat: narrow stance 4×12-16</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Friday</div>
+        <div class="modality">RUCK CAPACITY · Russo's Field</div>
+        <ul>
+          <li>Yoga — rest day</li>
+          <li>16 min mobility</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="page-calendar" class="page">
+  <div class="page-title">
+    <div class="breadcrumb">E2B Schedule · 2025</div>
+    <h2>Training Calendar</h2>
+    <p>Official E2B schedule — October/November 2025. Color coded by activity type.</p>
+  </div>
+  <div class="container">
+
+    <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+      <span style="font-size:0.75rem; padding:0.25rem 0.6rem; background:rgba(200,168,75,0.15); color:var(--accent); font-family:monospace;">■ PT / Training</span>
+      <span style="font-size:0.75rem; padding:0.25rem 0.6rem; background:rgba(75,143,200,0.15); color:var(--accent2); font-family:monospace;">■ Study / Admin</span>
+      <span style="font-size:0.75rem; padding:0.25rem 0.6rem; background:rgba(200,75,75,0.15); color:var(--danger); font-family:monospace;">■ Ruck</span>
+      <span style="font-size:0.75rem; padding:0.25rem 0.6rem; background:rgba(75,200,110,0.15); color:var(--go); font-family:monospace;">■ Test Event</span>
+      <span style="font-size:0.75rem; padding:0.25rem 0.6rem; background:rgba(100,100,100,0.15); color:var(--text-dim); font-family:monospace;">■ Rest / Recovery</span>
+    </div>
+
+    <div class="section-header">
+      <div class="label">October 2025</div>
+      <h2>Official E2B Schedule</h2>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-header">SUN</div><div class="cal-header">MON</div><div class="cal-header">TUE</div><div class="cal-header">WED</div><div class="cal-header">THU</div><div class="cal-header">FRI</div><div class="cal-header">SAT</div>
+
+      <!-- Week 1 of Oct -->
+      <div class="cal-day empty"></div>
+      <div class="cal-day"><div class="date">6 Oct</div><div class="event study">Cadre Set Up</div></div>
+      <div class="cal-day"><div class="date">7 Oct</div><div class="event study">Cadre Set Up</div></div>
+      <div class="cal-day"><div class="date">8 Oct</div><div class="event study">Cadre Set Up</div></div>
+      <div class="cal-day"><div class="date">9 Oct</div><div class="event test">Regiment Validation</div></div>
+      <div class="cal-day"><div class="date">10 Oct</div><div class="event rest">—</div></div>
+      <div class="cal-day"><div class="date">11 Oct</div><div class="event rest">—</div></div>
+
+      <!-- Week 2 -->
+      <div class="cal-day"><div class="date">12 Oct</div><div class="event rest">—</div></div>
+      <div class="cal-day"><div class="date">13 Oct</div><div class="event test">EIB Committee Validation</div></div>
+      <div class="cal-day"><div class="date">14 Oct</div><div class="event test">EIB Committee Validation</div></div>
+      <div class="cal-day"><div class="date">15 Oct</div><div class="event test">EIB Committee Validation</div></div>
+      <div class="cal-day"><div class="date">16 Oct</div><div class="event test">EIB Committee Validation</div></div>
+      <div class="cal-day"><div class="date">17 Oct</div><div class="event test">EIB Committee Validation</div></div>
+      <div class="cal-day"><div class="date">18 Oct</div><div class="event study">Candidate Training</div></div>
+
+      <!-- Week 3 -->
+      <div class="cal-day"><div class="date">19 Oct</div><div class="event rest">—</div></div>
+      <div class="cal-day"><div class="date">20 Oct</div><div class="event pt">Candidate Training Week</div></div>
+      <div class="cal-day"><div class="date">21 Oct</div><div class="event pt">Candidate Training Week</div></div>
+      <div class="cal-day"><div class="date">22 Oct</div><div class="event pt">Candidate Training Week</div></div>
+      <div class="cal-day"><div class="date">23 Oct</div><div class="event pt">Candidate Training Week</div></div>
+      <div class="cal-day"><div class="date">24 Oct</div><div class="event pt">Candidate Training Week</div></div>
+      <div class="cal-day"><div class="date">25 Oct</div><div class="event rest">—</div></div>
+
+      <!-- Week 4 -->
+      <div class="cal-day"><div class="date">26 Oct</div><div class="event study">Admin Day</div></div>
+      <div class="cal-day"><div class="date">27 Oct</div><div class="event test">TEST WEEK</div></div>
+      <div class="cal-day"><div class="date">28 Oct</div><div class="event test">TEST WEEK</div></div>
+      <div class="cal-day"><div class="date">29 Oct</div><div class="event test">TEST WEEK</div></div>
+      <div class="cal-day"><div class="date">30 Oct</div><div class="event test">TEST WEEK</div></div>
+      <div class="cal-day"><div class="date">31 Oct</div><div class="event test">TEST WEEK</div></div>
+      <div class="cal-day"><div class="date">1 Nov</div><div class="event rest">—</div></div>
+    </div>
+
+    <div class="section-header" style="margin-top:1rem;">
+      <div class="label">November 2025</div>
+      <h2>Recovery Period</h2>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-header">SUN</div><div class="cal-header">MON</div><div class="cal-header">TUE</div><div class="cal-header">WED</div><div class="cal-header">THU</div><div class="cal-header">FRI</div><div class="cal-header">SAT</div>
+      <div class="cal-day"><div class="date">2 Nov</div><div class="event rest">—</div></div>
+      <div class="cal-day"><div class="date">3 Nov</div><div class="event rest">Recovery Week</div></div>
+      <div class="cal-day"><div class="date">4 Nov</div><div class="event rest">Recovery Week</div></div>
+      <div class="cal-day"><div class="date">5 Nov</div><div class="event rest">Recovery Week</div></div>
+      <div class="cal-day"><div class="date">6 Nov</div><div class="event rest">Recovery Week</div></div>
+      <div class="cal-day"><div class="date">7 Nov</div><div class="event rest">Recovery Week</div></div>
+      <div class="cal-day"><div class="date">8 Nov</div><div class="event rest">—</div></div>
+    </div>
+
+    <div class="standard-block warning" style="margin-top:1rem;">
+      <h4>Pre-Submission Deadlines (Before Packet)</h4>
+      <ul>
+        <li>AFT scores — within 30 days of submission, must be 90+ in all events</li>
+        <li>12-Mile Ruck March — within 30 days of submission, under 3 hours</li>
+        <li>Weapons qualification (Expert) — within 6 months of submission</li>
+        <li>Land Navigation — local course (day and night) passed</li>
+        <li>Height/Weight — current, passing</li>
+        <li>No profile, no flag</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('open'));
+  document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+  // Open this one if it was closed
+  if (!isOpen) {
+    header.classList.add('open');
+    body.classList.add('open');
+  }
+}
+</script>
+</body>
+</html>
