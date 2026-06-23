@@ -875,7 +875,7 @@
       <div class="phase-card" onclick="showPage('phase4')">
         <div class="phase-num">PHASE 04 / 04</div>
         <h3>12-Mile Ruck March</h3>
-        <p>12-mile foot march followed immediately by a Final Event. Must complete the ruck in under 3 hours. Not retestable.</p>
+        <p>12-mile foot march followed immediately by a Final Event. Must complete the ruck in under 3 hours with a dry weight of 35 lbs (Not older than 90 days before packet submission) Not retestable.</p>
         <div class="go-tag">3:00 TIME LIMIT</div>
       </div>
     </div>
@@ -894,11 +894,11 @@
       </div>
       <div class="req-row">
         <div class="req-icon">🏃</div>
-        <div class="req-text"><strong>Army Fitness Test (AFT)</strong>Score 90 in every AFT event. Test cannot be older than 30 days from packet submission.</div>
+        <div class="req-text"><strong>Army Fitness Test (AFT)</strong>Score 80 in every AFT event with an average score of 85. (Test cannot be older than 30 days from packet submission).</div>
       </div>
       <div class="req-row">
         <div class="req-icon">🎒</div>
-        <div class="req-text"><strong>12-Mile Ruck March</strong>Complete a 12-mile ruck march under 3 hours within 30 days of packet submission.</div>
+        <div class="req-text"><strong>12-Mile Ruck March</strong>Complete a 12-mile ruck march under 2 hours and 50 minutes (within 30 days of packet submission).</div>
       </div>
       <div class="req-row">
         <div class="req-icon">🎯</div>
@@ -924,7 +924,7 @@
     <div class="req-list">
       <div class="req-row"><div class="req-icon">📄</div><div class="req-text"><strong>Soldier Talent Profile</strong>Current talent profile from iPERMS/AIM.</div></div>
       <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>DA Form 7081</strong>Rifle Marksmanship Scorecard — must show Expert qualification.</div></div>
-      <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>DA Form 705</strong>Army Fitness Test Scorecard — 90+ in all events, within 30 days.</div></div>
+      <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>DA Form 705</strong>Army Fitness Test Scorecard.</div></div>
       <div class="req-row"><div class="req-icon">📋</div><div class="req-text"><strong>Exception to Policy</strong>Required for non-combat MOS participation. Coordinate with chain of command.</div></div>
     </div>
 
@@ -2662,8 +2662,8 @@
     <div class="standard-block warning" style="margin-top:1rem;">
       <h4>Pre-Submission Deadlines (Before Packet)</h4>
       <ul>
-        <li>AFT scores — within 30 days of submission, must be 90+ in all events</li>
-        <li>12-Mile Ruck March — within 30 days of submission, under 3 hours</li>
+        <li>AFT scores — within 30 days of submission, must be 80 in all events</li>
+        <li>12-Mile Ruck March — within 30 days of submission, under 2 hours and 50 minutes</li>
         <li>Weapons qualification (Expert) — within 6 months of submission</li>
         <li>Land Navigation — local course (day and night) passed</li>
         <li>Height/Weight — current, passing</li>
